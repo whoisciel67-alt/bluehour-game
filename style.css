@@ -134,17 +134,19 @@ body {
 /*petals*/
 
 .petals {
-    position: fixed;
+    position: absolute;
     inset: 0;
 
-    pointer-events: none;
     overflow: hidden;
+    pointer-events: none;
 
-    z-index: 1;
+    z-index: 2;
 }
 
 .petals span {
     position: absolute;
+
+    top: -80px;
 
     color: var(--pink);
     opacity: 0.7;
@@ -152,38 +154,73 @@ body {
     font-size: 22px;
     white-space: nowrap;
 
-    animation: floatPetals 12s linear infinite;
+    animation: fallingPetals 12s linear infinite;
+    animation-fill-mode: backwards;
 }
+
+/* Different horizontal positions */
 
 .petals span:nth-child(1) {
     left: 10%;
     animation-delay: 0s;
+    animation-duration: 11s;
 }
 
 .petals span:nth-child(2) {
     left: 25%;
-    animation-delay: 2s;
+    animation-delay: 3s;
+    animation-duration: 14s;
 }
 
 .petals span:nth-child(3) {
     left: 45%;
-    animation-delay: 4s;
+    animation-delay: 6s;
+    animation-duration: 12s;
 }
 
 .petals span:nth-child(4) {
     left: 65%;
-    animation-delay: 1s;
+    animation-delay: 2s;
+    animation-duration: 15s;
 }
 
 .petals span:nth-child(5) {
     left: 80%;
-    animation-delay: 3s;
+    animation-delay: 5s;
+    animation-duration: 13s;
 }
 
 .petals span:nth-child(6) {
     left: 92%;
-    animation-delay: 5s;
+    animation-delay: 8s;
+    animation-duration: 11s;
 }
+
+/* Falling animation */
+
+@keyframes fallingPetals {
+
+    0% {
+        transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+
+    25% {
+        transform: translate3d(35px, 25vh, 0) rotate(90deg);
+    }
+
+    50% {
+        transform: translate3d(-20px, 50vh, 0) rotate(180deg);
+    }
+
+    75% {
+        transform: translate3d(40px, 75vh, 0) rotate(270deg);
+    }
+
+    100% {
+        transform: translate3d(-15px, 110vh, 0) rotate(360deg);
+    }
+}
+
 
 /*main menu*/
 
