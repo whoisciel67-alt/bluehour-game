@@ -179,3 +179,92 @@ body {
     left: 92%;
     animation-delay: 5s;
 }
+
+/*main menu*/
+
+#mainMenu {
+    display: none;
+
+    height: 100vh;
+    width: 100%;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 20px;
+
+    background: var(--dark-purple);
+    text-align: center;
+}
+
+#mainMenu h1 {
+    font-family: 'Kings', serif;
+    font-size: 90px;
+    font-weight: normal;
+
+    color: var(--white-pink);
+
+    text-shadow: 0 0 20px var(--lavender);
+}
+
+#mainMenu p {
+    font-size: 12px;
+    letter-spacing: 4px;
+    color: var(--pink);
+}
+
+#mainMenu button {
+    width: 190px;
+    padding: 13px;
+
+    background: transparent;
+
+    border: 1px solid var(--lavender);
+
+    color: var(--white-pink);
+
+    font-family: 'Average Sans', sans-serif;
+    font-size: 12px;
+    letter-spacing: 3px;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+}
+
+#mainMenu button:hover {
+    background: var(--purple);
+    border-color: var(--pink);
+
+    color: var(--pink);
+
+    box-shadow: 0 0 20px rgba(255, 181, 235, 0.3);
+}
+
+/*animations*/
+
+@keyframes floatPetals {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+    }
+
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+    }
+}
+
+@keyframes titleGlow {
+    from {
+        text-shadow: 
+            0 0 10px var(--lavender),
+            0 0 20px var(--purple);
+    }
+
+    to {
+        text-shadow: 
+            0 0 20px var(--pink),
+            0 0 40px var(--lavender);
+
+    }
+}
