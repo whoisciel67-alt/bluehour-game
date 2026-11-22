@@ -1,0 +1,181 @@
+/*general*/
+
+:root {
+    --dark-purple: #251052;
+    --purple: #49266F;
+    --lavender: #A879CE;
+    --pink: #FFB5EB;
+    --white-pink: #FFF0FF;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--dark-purple);
+    color: var(--white-pink);
+    font-family: 'Average Sans', sans-serif;
+    overflow: hidden;
+
+}
+
+/*loading*/
+.loading-screen {
+    position: fixed;
+    inset: 0;
+
+    background-image:
+        linear-gradient(
+            rgba(37, 16, 82, 0.35),
+            rgba(37, 16, 82, 0.65)
+        ),
+        url("images/loading-bg.png");
+
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        z-index: 1000;
+
+        transition: opacity 1.5s ease;
+}
+
+.loading-content {
+    text-align: center;
+    z-index: 2;
+}
+
+
+.loading-subtitle {
+    font-family: 'Average Sans', sans-serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+
+    color: var(--pink);
+
+    margin-top: 15px;
+}
+
+.subtitle {
+    font-family: 'Average Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: var(--pink);
+    margin-bottom: 15px;
+}
+
+.loading-content h1 {
+    font-family: 'Kings', serif;
+    font-size: 100px;
+    font-weight: normal;
+    letter-spacing: 8px;
+
+    color: var(--white-pink);
+
+    text-shadow: 
+        0 0 10px var(--lavender),
+        0 0 25px var(--purple);
+
+    animation: titleGlow 3s ease-in-out infinite alternate;
+}
+
+/*progress bar*/
+
+.loading-bar {
+    width: 300px;
+    height: 2px;
+
+    background: rgba(255, 240, 255, 0.25);
+
+    margin-top: 60px;
+    overflow: hidden;
+}
+
+.progress {
+    width: 0%;
+    height: 100%;
+
+    background: var(--pink);
+
+    box-shadow: 0 0 15px var(--pink);
+
+    transition: width 0.2 ease;
+}
+
+#loadingText {
+    font-size: 10px;
+    letter-spacing: 3px;
+
+    color: var(--lavender);
+
+    margin-top: 20px;
+}
+
+#percentage {
+    font-size: 11px;
+    color: var(--white-pink);
+
+    margin-top: 8px;
+}
+
+/*petals*/
+
+.petals {
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+    overflow: hidden;
+
+    z-index: 1;
+}
+
+.petals span {
+    position: absolute;
+
+    color: var(--pink);
+    opacity: 0.7;
+
+    font-size: 22px;
+    white-space: nowrap;
+
+    animation: floatPetals 12s linear infinite;
+}
+
+.petals span:nth-child(1) {
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.petals span:nth-child(2) {
+    left: 25%;
+    animation-delay: 2s;
+}
+
+.petals span:nth-child(3) {
+    left: 45%;
+    animation-delay: 4s;
+}
+
+.petals span:nth-child(4) {
+    left: 65%;
+    animation-delay: 1s;
+}
+
+.petals span:nth-child(5) {
+    left: 80%;
+    animation-delay: 3s;
+}
+
+.petals span:nth-child(6) {
+    left: 92%;
+    animation-delay: 5s;
+}
