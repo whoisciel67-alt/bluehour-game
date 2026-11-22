@@ -273,3 +273,64 @@ body {
 
     }
 }
+
+
+/*main menu animation*/
+
+/*initial state*/
+#mainMenu {
+    opacity: 0;
+    transform: translateY(15px);
+
+    transition:
+        opacity 1.5s ease,
+        transform 1.5s ease;
+}
+
+/*when menu appear*/
+#mainMenu.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Individual menu elements */
+#mainMenu h1,
+#mainMenu p,
+#mainMenu button {
+    opacity: 0;
+    transform: translateY(20px);
+
+    transition:
+        opacity 1.2s ease,
+        transform 1.2s ease;
+}
+
+#mainMenu.show h1 {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.3s;
+}
+
+#mainMenu.show p {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.7s;
+}
+
+#mainMenu.show button:nth-of-type(1) {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 1.0s;
+}
+
+#mainMenu.show button:nth-of-type(2) {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 1.2s;
+}
+
+#mainMenu.show button:nth-of-type(3) {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 1.4s;
+}

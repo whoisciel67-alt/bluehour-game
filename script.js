@@ -84,6 +84,11 @@ window.addEventListener("load", () => {
                     // SHOW MAIN MENU
                     mainMenu.style.display = "flex";
 
+                    // Trigger entrance animation
+                    requestAnimationFrame(() => {
+                        mainMenu.classList.add("show");
+                    });
+
                 }, 1500);
 
             }, 700);
