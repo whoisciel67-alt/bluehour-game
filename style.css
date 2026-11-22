@@ -57,6 +57,9 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    position: relative;
+    z-index: 3;
 }
 
 
@@ -227,8 +230,11 @@ body {
 #mainMenu {
     display: none;
 
-    height: 100vh;
+    position: fixed;
+    inset: 0;
+
     width: 100%;
+    height: 100vh;
 
     flex-direction: column;
     justify-content: center;
@@ -236,9 +242,24 @@ body {
 
     gap: 20px;
 
-    background: var(--dark-purple);
+    /*background image (different from loading screen)*/
+    background-image:
+        linear-gradient(
+            rgba(37, 16, 82, 0.35),
+            rgba(37, 16, 82, 0.65)
+        ),
+        url("images/menu-bg.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
     text-align: center;
+    overflow: hidden;
+
+    z-index: 10;
 }
+
 
 #mainMenu h1 {
     font-family: 'Kings', serif;
@@ -247,7 +268,9 @@ body {
 
     color: var(--white-pink);
 
-    text-shadow: 0 0 20px var(--lavender);
+    text-shadow:
+        0 0 20px var(--lavender),
+        0 0 40px var(--purple);
 }
 
 #mainMenu p {
@@ -260,7 +283,7 @@ body {
     width: 190px;
     padding: 13px;
 
-    background: transparent;
+    background: rgba(37, 16, 82, 0.25);
 
     border: 1px solid var(--lavender);
 
@@ -271,7 +294,6 @@ body {
     letter-spacing: 3px;
 
     cursor: pointer;
-
     transition: 0.3s ease;
 }
 
@@ -370,4 +392,25 @@ body {
     opacity: 1;
     transform: translateY(0);
     transition-delay: 1.4s;
+}
+
+/*menu audio iNSTRUCTION */
+
+#soundHint {
+    font-size: 9px !important;
+    letter-spacing: 3px !important;
+    color: var(--lavender) !important;
+    margin-top: 20px;
+    opacity: 0.8;
+    animation: hintPulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes hintPulse {
+    from {
+        opacity: 0.35;
+    }
+
+    to {
+        opacity: 1;
+    }
 }

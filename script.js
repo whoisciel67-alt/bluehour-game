@@ -1,28 +1,73 @@
 //loading
-
 window.addEventListener("load", () => {
 
-    // GET HTML ELEMENTS
+    // GET ELEMENTS
 
     const loadingScreen = document.querySelector(".loading-screen");
     const progress = document.getElementById("progress");
     const percentage = document.getElementById("percentage");
     const loadingText = document.getElementById("loadingText");
+
     const mainMenu = document.getElementById("mainMenu");
+
+    const menuMusic = document.getElementById("menuMusic");
+    const soundHint = document.getElementById("soundHint");
 
 
     // CHECK ELEMENTS
 
-    if (
-        !loadingScreen ||
-        !progress ||
-        !percentage ||
-        !loadingText ||
-        !mainMenu
-    ) {
-        console.error("LUMA ERROR: Missing HTML elements!");
+    if (!loadingScreen || !progress || !percentage ||
+        !loadingText || !mainMenu || !menuMusic) {
+
+        console.error("LUMA ERROR: Missing elements!");
         return;
     }
+
+
+    // MUSIC SETTINGS
+
+    menuMusic.volume = 0.35;
+
+    async function startMenuMusic() {
+
+        try {
+
+            await menuMusic.play();
+
+            if (soundHint) {
+                soundHint.style.display = "none";
+            }
+
+        } catch (error) {
+
+            console.log("LUMA: Waiting for user interaction to play music.");
+
+            if (soundHint) {
+                soundHint.style.display = "block";
+            }
+        }
+    }
+
+
+    // ENABLE MUSIC AFTER USER INTERACTION
+
+    function enableMusic() {
+
+        startMenuMusic();
+
+    }
+
+    document.addEventListener("pointerdown", () => {
+        if (mainMenu.style.display === "flex") {
+            enableMusic();
+        }
+    });
+
+    document.addEventListener("keydown", () => {
+        if (mainMenu.style.display === "flex") {
+            enableMusic();
+        }
+    });
 
 
     // LOADING SETTINGS
@@ -47,7 +92,7 @@ window.addEventListener("load", () => {
 
         count++;
 
-        // UPDATE PROGRESS BAR
+        // UPDATE BAR
         progress.style.width = count + "%";
 
         // UPDATE PERCENTAGE
@@ -67,6 +112,7 @@ window.addEventListener("load", () => {
 
 
         // FINISH LOADING
+
         if (count >= 100) {
 
             clearInterval(loadingInterval);
@@ -78,16 +124,19 @@ window.addEventListener("load", () => {
 
                 setTimeout(() => {
 
-                    // HIDE LOADING SCREEN
                     loadingScreen.style.display = "none";
 
                     // SHOW MAIN MENU
                     mainMenu.style.display = "flex";
 
-                    // Trigger entrance animation
                     requestAnimationFrame(() => {
+
                         mainMenu.classList.add("show");
+
                     });
+
+                    // START MAIN MENU MUSIC
+                    startMenuMusic();
 
                 }, 1500);
 
