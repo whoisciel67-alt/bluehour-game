@@ -23,7 +23,8 @@ body {
 }
 
 /*loading*/
-.loading.screen {
+
+.loading-screen {
     position: fixed;
     inset: 0;
 
@@ -34,23 +35,28 @@ body {
         ),
         url("images/loading-bg.png");
 
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-        z-index: 1000;
+    z-index: 1000;
 
-        transition: opacity 1.5s ease;
+    transition: opacity 1.5s ease;
 }
 
+
 .loading-content {
+    width: 100%;
     text-align: center;
-    z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 
@@ -99,15 +105,14 @@ body {
     overflow: hidden;
 }
 
-.progress {
+#progress {
     width: 0%;
     height: 100%;
 
     background: var(--pink);
-
     box-shadow: 0 0 15px var(--pink);
 
-    transition: width 0.2 ease;
+    transition: width 0.2s ease;
 }
 
 #loadingText {

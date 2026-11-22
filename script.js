@@ -1,12 +1,17 @@
-// loading screen //
+//loading
 
 window.addEventListener("load", () => {
-    //get html elements//
-    const loadingScreen = document.querySelector(".loading.screen")
+
+    // GET HTML ELEMENTS
+
+    const loadingScreen = document.querySelector(".loading-screen");
     const progress = document.getElementById("progress");
     const percentage = document.getElementById("percentage");
     const loadingText = document.getElementById("loadingText");
     const mainMenu = document.getElementById("mainMenu");
+
+
+    // CHECK ELEMENTS
 
     if (
         !loadingScreen ||
@@ -14,61 +19,42 @@ window.addEventListener("load", () => {
         !percentage ||
         !loadingText ||
         !mainMenu
-    ){
-        console.error("LUMA ERROR: Loading screen elements missing.");
+    ) {
+        console.error("LUMA ERROR: Missing HTML elements!");
         return;
     }
 
+
+    // LOADING SETTINGS
+
     let count = 0;
-    const loadingSpeed = 35; //milliseconds
+
+    const loadingSpeed = 35;
+
     const loadingMessages = [
-        {
-            percent: 0,
-            message: "SYNCHRONIZING MEMORIES..."
-        },
-
-        {
-            percent: 20,
-            message: "RESTORING ARCHIVE..."
-        },
-
-        {
-            percent: 40,
-            message: "SEARCHING FOR LOST DATA..."
-        },
-
-        {
-            percent: 60,
-            message: "MEMORY FRAGMENTS FOUND..."
-        },
-
-        {
-            percent: 80,
-            message: "RECONNECTING TO VEYRA..."
-        },
-
-        {
-            percent: 100,
-            message: "WELCOME BACK TO VEYRA."
-        }
+        { percent: 0, message: "SYNCHRONIZING MEMORIES..." },
+        { percent: 20, message: "RESTORING ARCHIVE..." },
+        { percent: 40, message: "SEARCHING FOR LOST DATA..." },
+        { percent: 60, message: "MEMORY FRAGMENTS FOUND..." },
+        { percent: 80, message: "RECONNECTING TO VEYRA..." },
+        { percent: 100, message: "WELCOME BACK TO VEYRA." }
     ];
 
-    //loading animation//
 
-    loadingText.textContent = loadingMessages[0].message;
+    // START LOADING
 
     const loadingInterval = setInterval(() => {
 
         count++;
 
-        //update progress bar
+        // UPDATE PROGRESS BAR
         progress.style.width = count + "%";
 
-        //update progress text
+        // UPDATE PERCENTAGE
         percentage.textContent = count + "%";
 
-    //update loading msgs
 
+        // UPDATE MESSAGES
         for (let i = loadingMessages.length - 1; i >= 0; i--) {
 
             if (count >= loadingMessages[i].percent) {
@@ -76,30 +62,32 @@ window.addEventListener("load", () => {
                 loadingText.textContent = loadingMessages[i].message;
 
                 break;
-
             }
-
         }
 
-    //finish loading
 
+        // FINISH LOADING
         if (count >= 100) {
+
             clearInterval(loadingInterval);
 
-            //wait before transition
             setTimeout(() => {
-                //fade out
-                loadingScreen.style.opaciy = "0";
 
-                //wait for fade animation
+                // FADE OUT LOADING SCREEN
+                loadingScreen.style.opacity = "0";
+
                 setTimeout(() => {
+
+                    // HIDE LOADING SCREEN
                     loadingScreen.style.display = "none";
 
-                    //show main menu
+                    // SHOW MAIN MENU
                     mainMenu.style.display = "flex";
 
                 }, 1500);
+
             }, 700);
+
         }
 
     }, loadingSpeed);
