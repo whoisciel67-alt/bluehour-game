@@ -14,28 +14,67 @@
 </head>
 
 <body class="chapter-select-page">
+    
+    <audio id="chapterMusic" loop preload="auto">
+        <source src="audio/menu-theme.mp3" type="audio/mpeg">
+    </audio>
+
     <main class="chapter-select-container">
+
         <h1>CHAPTERS</h1>
 
-        <!--chapter 01-->
-        <section class="chapter-card available">
-            <span class="chapter-status">AVAILABLE</span>
-            <h2>CHAPTER 01 - FROZEN BLUE HOUR</h2>
-            <p>Platform 04. Six years after your departure,<br>the station remembers something you don't.</p>
-            <span class="chapter-info">VEYRA TRANSIT STATION</span>
-            <a href="chapter1.html" class="chapter-button">SELECT CHAPTER 01</a>
-        </section>
+        <div class="chapter-grid">
 
-        <!--chapter 02-->
-        <section class="chapter-card locked">
-            <span class="chapter-status">IN DEVELOPMENT</span>
-            <h2>CHAPTER 02 - THE SUNLIT MALL</h2>
-            <p>A familiar afternoon. A childhood that might not<br>have happened exactly as you remember.</p>
-            <span class="chapter-info">LOCKED · COMING SOON</span>
-            <button class="chapter-button" disabled>LOCKED</button>
-        </section>
+            <!-- CHAPTER 01 -->
+            <section class="chapter-card available">
 
-        <a href="index.html" class="back-button">← BACK TO MENU</a>
+                <span class="chapter-status">AVAILABLE</span>
+
+                <h2>CHAPTER 01 - FROZEN BLUE HOUR</h2>
+
+                <p>
+                    Platform 04. Six years after your departure,
+                    the station remembers something you don't.
+                </p>
+
+                <span class="chapter-info">
+                    VEYRA TRANSIT STATION
+                </span>
+
+                <a href="chapter1.html" class="chapter-button">
+                    SELECT CHAPTER 01
+                </a>
+
+            </section>
+
+
+            <!-- CHAPTER 02 -->
+            <section class="chapter-card locked">
+
+                <span class="chapter-status">IN DEVELOPMENT</span>
+
+                <h2>CHAPTER 02 - THE SUNLIT MALL</h2>
+
+                <p>
+                    A familiar afternoon. A childhood that might not
+                    have happened exactly as you remember.
+                </p>
+
+                <span class="chapter-info">
+                    LOCKED · COMING SOON
+                </span>
+
+                <button class="chapter-button" disabled>
+                    LOCKED
+                </button>
+
+            </section>
+
+        </div>
+
+        <a href="index.html" class="back-button">
+            ← BACK TO MENU
+        </a>
 
     </main>
 
