@@ -614,3 +614,133 @@ body {
 }
 
 
+
+
+/*new.html*/
+
+/*cutscene 1*/
+.cutscene-page {
+    background: #252525;
+    overflow: hidden;
+}
+
+#cutscene {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background:
+        linear-gradient(
+            rgba(37, 16, 82, 0.35),
+            rgba(37, 16, 82, 0.75)
+        ),
+        url("images/cutscene-bg.png");
+
+    background-size: cover;
+    background-position: center;
+
+    opacity: 0;
+    transition: opacity 2s ease;
+}
+
+#cutscene.active {
+    opacity: 1;
+}
+
+.cutscene-content {
+    max-width: 750px;
+    padding: 30px;
+    text-align: center;
+}
+
+#sceneLabel {
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: var(--pink);
+    margin-bottom: 25px;
+}
+
+#sceneTitle {
+    font-family: 'Kings', serif;
+    font-size: clamp(45px, 8vw, 90px);
+    font-weight: normal;
+    color: var(--white-pink);
+
+    text-shadow: 0 0 25px var(--lavender);
+
+    margin-bottom: 30px;
+}
+
+#sceneText {
+    font-size: 16px;
+    letter-spacing: 2px;
+    line-height: 2;
+    color: var(--white-pink);
+
+    opacity: 0;
+    transition: opacity 1.5s ease;
+}
+
+#sceneText.visible {
+    opacity: 1;
+}
+
+#skipButton,
+#continueButton {
+    position: absolute;
+    bottom: 35px;
+
+    padding: 12px 20px;
+
+    background: transparent;
+    border: 1px solid var(--lavender);
+
+    color: var(--white-pink);
+    font-family: 'Average Sans', sans-serif;
+    letter-spacing: 2px;
+
+    cursor: pointer;
+    transition: 0.4s ease;
+}
+
+#skipButton {
+    right: 35px;
+}
+
+#continueButton {
+    display: none;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#skipButton:hover,
+#continueButton:hover {
+    color: var(--pink);
+    border-color: var(--pink);
+    background: rgba(168, 121, 206, 0.2);
+}
+
+#gameContent {
+    display: none;
+    position: fixed;
+    inset: 0;
+
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    background: #251052;
+    text-align: center;
+
+    opacity: 0;
+    transition: opacity 2s ease;
+}
+
+#gameContent.visible {
+    display: flex;
+    opacity: 1;
+}
