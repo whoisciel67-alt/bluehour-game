@@ -14,13 +14,13 @@
 </head>
 
 <body class="cutscene-page">
-    <audio id="cutsceneMusic" src="audio/cutscene.mp3" loop></audio>
     <div id="cutscene">
-        <div class="cutscene-content">
+        <video id="introVideo" autoplay muted playsinline controls preload="auto">
+            <source src="videos/intro.mp4" type="video/mp4">
+            Your browser does not support video.
+        </video>
 
-        </div>
-
-        <button id="skipButton">SKIP INTRO</button>
+        <button id="skipButton">SKIP »</button>
         <button id="continueButton">CONTINUE</button>
     </div>
 
