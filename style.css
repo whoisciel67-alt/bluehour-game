@@ -619,60 +619,45 @@ body {
 /*new.html*/
 
 /*cutscene 1*/
-/* =====================================
-   VIDEO CUTSCENE
-===================================== */
-
 .cutscene-page {
-    background: #251052;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
+    background: #251052;
 }
 
 #cutscene {
     position: fixed;
     inset: 0;
-    z-index: 1000;
-
+    width: 100%;
+    height: 100vh;
     background: #251052;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     opacity: 0;
-    transition: opacity 1.5s ease;
+    visibility: hidden;
+
+    transition:
+        opacity 2s ease-in-out,
+        visibility 2s ease-in-out;
 }
 
 #cutscene.active {
     opacity: 1;
+    visibility: visible;
 }
 
 #introVideo {
-    display: block;
     width: 100%;
     height: 100%;
+    display: block;
 
     object-fit: contain;
+    object-position: center;
+
     background: #251052;
-}
-
-#skipButton {
-    position: absolute;
-    bottom: 35px;
-    right: 40px;
-
-    padding: 12px 22px;
-
-    background: rgba(37, 16, 82, 0.5);
-    border: 1px solid var(--lavender);
-
-    color: var(--white-pink);
-
-    font-family: 'Average Sans', sans-serif;
-    letter-spacing: 3px;
-
-    cursor: pointer;
-    transition: 0.4s ease;
-}
-
-#skipButton:hover {
-    background: var(--purple);
-    color: var(--pink);
-    border-color: var(--pink);
 }

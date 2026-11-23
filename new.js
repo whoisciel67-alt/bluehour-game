@@ -13,15 +13,15 @@ let hasEnded = false;
 // START CUTSCENE
 
 window.addEventListener("load", () => {
-
-    requestAnimationFrame(() => {
-        cutscene.classList.add("active");
-    });
-
     video.play().catch(() => {
         console.log("Video playback requires user interaction.");
     });
 
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            cutscene.classList.add("active");
+        });
+    });
 });
 
 
