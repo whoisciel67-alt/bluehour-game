@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
         cutscene.classList.add("fade-out");
 
         setTimeout(() => {
-            window.location.href = "game.html";
+            window.location.href = "chapter-select.html";
         }, 1500);
     }
 
