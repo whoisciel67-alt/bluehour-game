@@ -1,4 +1,7 @@
+
+// ======================================
 // VEYRA — VIDEO CUTSCENE
+// ======================================
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -9,16 +12,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let hasFinished = false;
 
-    // Smoothly reveal the cutscene
+    // Reveal cutscene
     requestAnimationFrame(() => {
         requestAnimationFrame(() => {
             cutscene.classList.add("active");
         });
     });
 
-    // Start video
-    video.play().catch(() => {
-        console.log("Video playback was blocked.");
+    // Check video loading
+    video.addEventListener("loadeddata", () => {
+        console.log("VEYRA: Video loaded successfully.");
+    });
+
+    video.addEventListener("error", () => {
+        console.error("VEYRA: Video failed to load.", video.error);
+    });
+
+    // Attempt autoplay WITH sound
+    video.muted = false;
+    video.volume = 1;
+
+    video.play().catch((error) => {
+        console.error("VEYRA: Video autoplay failed:", error);
     });
 
     // Show Continue when video ends
@@ -28,16 +43,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Skip video
-    skipButton.addEventListener("click", () => {
-        finishCutscene();
-    });
+    skipButton.addEventListener("click", finishCutscene);
 
     // Continue after video
-    continueButton.addEventListener("click", () => {
-        finishCutscene();
-    });
+    continueButton.addEventListener("click", finishCutscene);
 
-    // End cutscene and enter the game
+    // Finish cutscene
     function finishCutscene() {
 
         if (hasFinished) return;
@@ -45,6 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
         hasFinished = true;
 
         video.pause();
+
         cutscene.classList.remove("active");
         cutscene.classList.add("fade-out");
 
