@@ -147,3 +147,89 @@ window.addEventListener("load", () => {
     }, loadingSpeed);
 
 });
+
+
+
+// menu sound & nav
+
+const menuButtons = document.querySelectorAll(
+    ".menu-options button"
+);
+
+let clickAudioContext = null;
+
+function playClickSound() {
+
+    // Create audio context when first needed
+    if (!clickAudioContext) {
+
+        clickAudioContext = new (
+            window.AudioContext ||
+            window.webkitAudioContext
+        )();
+
+    }
+
+    if (clickAudioContext.state === "suspended") {
+        clickAudioContext.resume();
+    }
+
+    const oscillator = clickAudioContext.createOscillator();
+    const gain = clickAudioContext.createGain();
+
+    // Soft futuristic chime
+    oscillator.type = "sine";
+
+    oscillator.frequency.setValueAtTime(
+        880,
+        clickAudioContext.currentTime
+    );
+
+    oscillator.frequency.exponentialRampToValueAtTime(
+        440,
+        clickAudioContext.currentTime + 0.12
+    );
+
+    gain.gain.setValueAtTime(
+        0.12,
+        clickAudioContext.currentTime
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        0.001,
+        clickAudioContext.currentTime + 0.2
+    );
+
+    oscillator.connect(gain);
+    gain.connect(clickAudioContext.destination);
+
+    oscillator.start();
+    oscillator.stop(clickAudioContext.currentTime + 0.2);
+
+}
+
+// BUTTON NAVIGATION
+
+menuButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        const destination = button.dataset.page;
+
+        if (!destination) {
+            return;
+        }
+
+        // Play button sound
+        playClickSound();
+
+        // Navigate after sound begins
+        setTimeout(() => {
+
+            window.location.href = destination;
+
+        }, 250);
+
+    });
+
+});
