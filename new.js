@@ -1,56 +1,56 @@
+// VEYRA — VIDEO CUTSCENE
 
-// ======================================
-// VEYRA — INTRO VIDEO
-// ======================================
+document.addEventListener("DOMContentLoaded", () => {
 
-const video = document.getElementById("introVideo");
-const cutscene = document.getElementById("cutscene");
-const skipButton = document.getElementById("skipButton");
+    const video = document.getElementById("introVideo");
+    const cutscene = document.getElementById("cutscene");
+    const skipButton = document.getElementById("skipButton");
+    const continueButton = document.getElementById("continueButton");
 
-let hasEnded = false;
+    let hasFinished = false;
 
-
-// START CUTSCENE
-
-window.addEventListener("load", () => {
-    video.play().catch(() => {
-        console.log("Video playback requires user interaction.");
-    });
-
+    // Smoothly reveal the cutscene
     requestAnimationFrame(() => {
         requestAnimationFrame(() => {
             cutscene.classList.add("active");
         });
     });
+
+    // Start video
+    video.play().catch(() => {
+        console.log("Video playback was blocked.");
+    });
+
+    // Show Continue when video ends
+    video.addEventListener("ended", () => {
+        continueButton.hidden = false;
+        skipButton.hidden = true;
+    });
+
+    // Skip video
+    skipButton.addEventListener("click", () => {
+        finishCutscene();
+    });
+
+    // Continue after video
+    continueButton.addEventListener("click", () => {
+        finishCutscene();
+    });
+
+    // End cutscene and enter the game
+    function finishCutscene() {
+
+        if (hasFinished) return;
+
+        hasFinished = true;
+
+        video.pause();
+        cutscene.classList.remove("active");
+        cutscene.classList.add("fade-out");
+
+        setTimeout(() => {
+            window.location.href = "game.html";
+        }, 1500);
+    }
+
 });
-
-
-// VIDEO ENDS
-
-video.addEventListener("ended", () => {
-    finishCutscene();
-});
-
-
-// SKIP VIDEO
-
-skipButton.addEventListener("click", () => {
-    finishCutscene();
-});
-
-
-// FINISH CUTSCENE
-
-function finishCutscene() {
-
-    if (hasEnded) return;
-
-    hasEnded = true;
-
-    cutscene.classList.remove("active");
-
-    setTimeout(() => {
-        window.location.href = "game.html";
-    }, 1500);
-
-}

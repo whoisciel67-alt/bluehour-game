@@ -13,20 +13,22 @@
 
 </head>
 
+
 <body class="cutscene-page">
-    <div id="cutscene">
-        <video id="introVideo" autoplay muted playsinline controls preload="auto">
+
+    <main id="cutscene">
+
+        <video id="introVideo" autoplay muted playsinline preload="auto">
             <source src="videos/intro.mp4" type="video/mp4">
-            Your browser does not support video.
         </video>
 
-        <button id="skipButton">SKIP »</button>
-        <button id="continueButton">CONTINUE</button>
-    </div>
+        <div class="cutscene-buttons">
+            <button id="skipButton">SKIP »</button>
+            <button id="continueButton" hidden>CONTINUE »</button>
+        </div>
 
-    <div id="gameContent">
-        <h1>THE JOURNEY BEGINS</h1>
-        <o>Welcome to Veyra.</o>
-    </div>
+    </main>
 
 </body>
+
+</html>
