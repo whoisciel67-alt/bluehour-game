@@ -46,9 +46,13 @@ body {
 
     z-index: 1000;
 
-    transition: opacity 1.5s ease;
+    transition: opacity 1.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.loading-screen.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
 
 .loading-content {
     width: 100%;

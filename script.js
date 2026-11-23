@@ -113,6 +113,8 @@ window.addEventListener("load", () => {
 
         // FINISH LOADING
 
+// FINISH LOADING
+
         if (count >= 100) {
 
             clearInterval(loadingInterval);
@@ -120,7 +122,7 @@ window.addEventListener("load", () => {
             setTimeout(() => {
 
                 // FADE OUT LOADING SCREEN
-                loadingScreen.style.opacity = "0";
+                loadingScreen.classList.add("fade-out");
 
                 setTimeout(() => {
 
@@ -130,15 +132,13 @@ window.addEventListener("load", () => {
                     mainMenu.style.display = "flex";
 
                     requestAnimationFrame(() => {
-
                         mainMenu.classList.add("show");
-
                     });
 
-                    // START MAIN MENU MUSIC
+                    // START MENU MUSIC
                     startMenuMusic();
 
-                }, 1500);
+                }, 1800);
 
             }, 700);
 
