@@ -49,10 +49,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // START CUTSCENE
     // =====================================
 
-    video.play().catch(() => {
-        // Browser may require a user click before video playback.
-        skipButton.textContent = "ENTER PLATFORM →";
-    });
+
+// =====================================
+// START CUTSCENE
+// =====================================
+
+    const playButton = document.getElementById("playCutscene");
 
     function startPlatform() {
 
@@ -65,16 +67,35 @@ document.addEventListener("DOMContentLoaded", () => {
         cutscene.classList.remove("active");
         platform.classList.add("active");
 
-        music.volume = 0.7;
-        music.play().catch(() => {
-            console.log("Music will start after user interaction.");
-        });
+        if (music) {
+            music.volume = 0.7;
 
+            music.play().catch(() => {
+                console.log("Music playback requires interaction.");
+            });
+        }
     }
 
-    video.addEventListener("ended", startPlatform);
+    // Player clicks to start video WITH sound
+    playButton.addEventListener("click", () => {
+
+        video.currentTime = 0;
+
+        video.play()
+            .then(() => {
+                playButton.style.display = "none";
+            })
+            .catch(error => {
+                console.error("Video playback failed:", error);
+            });
+
+    });
+
+    // Skip video
     skipButton.addEventListener("click", startPlatform);
 
+    // Automatically enter the game when video ends
+    video.addEventListener("ended", startPlatform);
 
     // =====================================
     // PLAYER MOVEMENT
@@ -203,8 +224,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         ticketGate.classList.add("unlocked");
 
-        gateSfx.currentTime = 0;
-        gateSfx.play().catch(() => {});
+        if (gateSfx) {
+            gateSfx.currentTime = 0;
+            gateSfx.play().catch(() => {});
+        }
 
         // Slightly brighten the platform
         platform.style.filter = "brightness(1.2)";

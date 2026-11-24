@@ -26,6 +26,16 @@ button {
 
 /*opening cutscene*/
 
+#playCutscene {
+    right: 5%;
+    bottom: 6%;
+}
+
+#skipCutscene {
+    right: 5%;
+    bottom: 14%;
+}
+
 .cutscene {
     position: fixed;
     inset: 0;
@@ -150,7 +160,7 @@ button {
 
 .location-label p {
     color: var(--white-pink);
-    opacity: 0,65;
+    opacity: 0.65;
 }
 
 /*objective*/
@@ -600,3 +610,4 @@ button {
         gap: 30px;
     }
 }
+

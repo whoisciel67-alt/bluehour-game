@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VEYRA - Chapter 01</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="settings.css">
     <link rel="stylesheet" href="chapter1.css">
+    <script src="chapter1.js" defer></script>
     <!--google fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -143,11 +143,49 @@
     </div>
 
     <!--ticket gate-->
-    <button id="ticketGate" class="ticket-gate" aria-label="Inspect the ticket gate">
-        <span class="gate-glow"></span>
-        <span class="gate-label">LUMA ACCESS</span>
-        <span class="gate-prompt">[ E ] INSPECT</span>
-    </button>
+    <!-- MEMORY PANEL -->
+    <div id="memoryPanel" class="memory-panel">
+
+        <div class="memory-content">
+
+            <button id="closeMemory" class="memory-close">×</button>
+
+            <span class="memory-subtitle">LUMA MEMORY ARCHIVE</span>
+            <h2>CONFLICTING RECORDS</h2>
+
+            <p>Select a memory to examine.</p>
+
+            <button class="memory-card" data-memory="official">
+                <span>01 — LUMA OFFICIAL LOG</span>
+                <p>Passenger departed Veyra six years ago. Return ticket never purchased.</p>
+            </button>
+
+            <button class="memory-card" data-memory="mother">
+                <span>02 — MOTHER'S UNFINISHED FRAGMENT</span>
+                <p>I left a pass at the gate under the old cherry-blossom hologram, just in case you ever came back.</p>
+            </button>
+
+            <p id="memoryFeedback">Choose a memory to continue.</p>
+
+            <button id="alignMemory" disabled>
+                ALIGN MEMORY →
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- GATE UNLOCK MESSAGE -->
+    <div id="gateMessage" class="gate-message">
+
+        <div>
+            <span>MEMORY RESTORED</span>
+            <h2>The gate remembers.</h2>
+            <p>A path forward has opened.</p>
+            <button id="continueAfterGate">CONTINUE →</button>
+        </div>
+
+    </div>
 
     <!--player-->
     <div id="player" class="player">
