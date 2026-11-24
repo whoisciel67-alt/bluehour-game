@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VEYRA - Chapters</title>
+    <title>VEYRA - Chapter 01</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="chapter-select.css">
-    <script src="chapter-select.js" defer></script>
+    <link rel="stylesheet" href="settings.css">
+    <link rel="stylesheet" href="chapter1.css">
     <!--google fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -90,11 +90,77 @@
 
 </div>
 
-<body>
+<!--opening cutscene for chapter 1-->
+<section id="openingCutscene" class="cutscene active">
+    <video id="openingVideo" playsinline>
+        <source src="videos/" type="video/mp4">
+    </video>
+
+    <div c;ass="cutscene-caption">
+        <p>VEYRA TRANSIT STATION</p>
+        <h1>PLATFORM 04</h1>
+        <span>Six years later.</span>
+    </div>
+
+    <button id="skipCutscene" class="skipbutton">SKIP</button>
+
+</section>
+
+<!--playable-->
+<main id="platformScene" class="platform-scene">
+    <div class="platform-darkness"></div>
+
+    <!--location-->
+    <div class="location-label">
+        <span>VEYRA TRANSIT STATION</span>
+        <p>PLATFORM 04 · 05:42 AM</p>
+    </div>
+
+    <!--Objective-->
+    <div class="objective">
+        <span>OBJECTIVE</span>
+        <p>Follow the drifting lights.</p>
+    </div>
+
+    <!--petal trail-->
+    <div class="petal-trail" aria-hidden="true">
+        <span>✦</span>
+        <span>✧</span>
+        <span>✦</span>
+        <span>✧</span>
+        <span>✦</span>
+    </div>
+
+    <!--ticket gate-->
+    <button id="ticketGate" class="ticket-gate" aria-label="Inspect the ticket gate">
+        <span class="gate-glow"></span>
+        <span class="gate-label">LUMA ACCESS</span>
+        <span class="gate-prompt">[ E ] INSPECT</span>
+    </button>
+
+    <!--player-->
+    <div id="player" class="player">
+        <div class="player-light"></div>
+        <div class="player-silhouette"></div>
+    </div>
+
+    <!--interacion hint-->
+    <div id="movementHunt" class="movement-hint">
+        <span>← →</span>
+        MOVE
+        <span>W-A-S-D</span>
+    </div>
+
+    <!-- DIALOGUE -->
+    <div id="dialogueBox" class="dialogue-box">
+        <p class="dialogue-speaker">UNKNOWN</p>
+        <p id="dialogueText"></p>
+        <button id="dialogueContinue">CONTINUE →</button>
+    </div>
 
 
-    
-</body>
+
+</main>>
 
 
 
