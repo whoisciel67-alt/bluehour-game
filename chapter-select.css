@@ -1,3 +1,34 @@
+/*page transitions*/
+:root {
+    --smooth-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+body::after{
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: #16092f;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: opacity 0.9s var(--smooth-ease);
+}
+
+body.page-leaving::after {
+    opacity: 1;
+    pointer-events: all;
+}
+
+body.page-entering::after {
+    animation: revealPage 1s var(--smooth-ease) forwards;
+}
+
+@keyframes revealPage {
+    from {opacity: 1;}
+    to {opacity: 0;}
+}
+
+/*page settings*/
 :root {
     --dark-purple: #251052;
     --purple: #49266F;
