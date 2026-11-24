@@ -1,1 +1,154 @@
 /*global settings*/
+
+#gameControls {
+    position: fixed;
+    top: 22px;
+    right: 25px;
+    z-index: 9999;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.game-control-btn {
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(15, 15, 20, 0.75);
+    color: white;
+    padding: 10px 14px;
+    font: inherit;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.game-control-btn:hover {
+    background: rgba(255, 255, 255, 0.18);
+    transform: translateY(-2px)
+}
+
+/*popup background*/
+#settingsOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(6px);
+
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+#settingsOverlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+/*settings popup*/
+#settingsPopup {
+    position: relative;
+    width: min(440px, 100%);
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 30px;
+    color: white;
+    background: rgba(20,20,25,0.97);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 20px 70px rgba(0,0,0,0.5);
+
+    transform: translateY(18px) scale(0.98);
+    transition: transform 0.3s ease;
+}
+
+#settingsOverlay.open #settingsPopup {
+    transform: rotateY(0) scale(1);
+}
+
+.settings-heading {
+    margin: 0 0 25px;
+    font-size: 24px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.settings-close {
+    position: absolute;
+    top: 15px;
+    right: 18px;
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.settings-option {
+    margin: 22px 0;
+}
+
+.settings-option label,
+.settings-option .setting-label {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+.settings-option input[type="range"] {
+    width: 100%;
+    accent-color: white;
+    cursor: pointer;
+}
+
+.settings-option select {
+    width: 100%;
+    padding: 10px;
+    color: white;
+    background: #292930;
+    border: 1px solid rgba(255,255,255,0.25);
+    font: inherit;
+}
+
+.settings-value {
+    float: right;
+    opacity: 0.7;
+}
+
+.settings-website {
+    display: inline-block;
+    margin-top: 15px;
+    color: white;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    opacity: 0.8;
+}
+
+.settings-website:hover {
+    opacity: 1;
+}
+
+.settings-divider {
+    border: 0;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    margin: 20px 0;
+}
+
+@media (max-width: 600px) {
+    #gameControls {
+        top: 12px;
+        right: 12px;
+    }
+
+    .game-control-btn {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+
+    #settingsPopup {
+        padding: 25px 20px;
+    }
+}
