@@ -16,8 +16,8 @@ body {
     background: var(--dark-purple);
     color: var(--white-pink);
     font-family: 'Average Sans', sans-serif;
-    overflow: hidden;
-
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 /*chapter select*/
@@ -293,8 +293,13 @@ body {
 /* layout*/
 
 @media (max-width: 700px) {
+    .chapter-select-page {
+        align-items: flex-start;
+        padding: 35px 18px;
+    }
+
     .chapter-grid {
-        flex-direction: column;
+        grid-template-columns: 1fr;
     }
 
     .chapter-card {
