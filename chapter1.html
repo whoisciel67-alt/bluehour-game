@@ -90,6 +90,7 @@
 
 </div>
 
+<body class="chapter-one">
 <!--opening cutscene for chapter 1-->
 
 <section id="openingCutscene" class="cutscene active">
@@ -215,7 +216,88 @@
 
 
 
-</main>>
+    <!--ticket gate memory puzzle-->
+            <section id="memoryPanel" class="memory-panel">
+
+            <div class="memory-content">
+
+                <span class="memory-label">LUMA SYSTEM // ACCESS RECORD</span>
+
+                <h2>THE TICKET GATE</h2>
+
+                <p class="memory-description">
+                    Two memories overlap.
+                    One belongs to the system.
+                    The other feels strangely familiar.
+                </p>
+
+                <div class="memory-options">
+
+                    <!-- OFFICIAL MEMORY -->
+                    <button class="memory-card" data-memory="official">
+
+                        <span class="memory-type">OFFICIAL LOG</span>
+
+                        <h3>LUMA TRANSIT RECORD</h3>
+
+                        <p>
+                            "Passenger departed Veyra six years ago.
+                            Return ticket never purchased."
+                        </p>
+
+                        <span class="memory-select">SELECT MEMORY</span>
+
+                    </button>
+
+
+                    <!-- MOTHER'S MEMORY -->
+                    <button class="memory-card" data-memory="mother">
+
+                        <span class="memory-type">UNFINISHED FRAGMENT</span>
+
+                        <h3>UNKNOWN SOURCE</h3>
+
+                        <p>
+                            "I left a pass at the gate under the
+                            old cherry-blossom hologram,
+                            just in case you ever came back."
+                        </p>
+
+                        <span class="memory-select">SELECT MEMORY</span>
+
+                    </button>
+
+                </div>
+
+                <p id="memoryFeedback" class="memory-feedback">
+                    Select the memory you want to follow.
+                </p>
+
+                <button id="alignMemory" class="align-button" disabled>
+                    ALIGN MEMORY
+                </button>
+
+                <button id="closeMemory" class="memory-close">
+                    CLOSE
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- GATE UNLOCK MESSAGE -->
+        <div id="gateMessage" class="gate-message">
+            <span>MEMORY ALIGNED</span>
+            <h2>ACCESS RESTORED</h2>
+            <p>The frozen barrier begins to dissolve.</p>
+            <button id="continueAfterGate">CONTINUE →</button>
+        </div>
+
+    </main>
+</body>
+
+</main>
 
 
 
