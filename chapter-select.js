@@ -1,56 +1,57 @@
 
-
 document.addEventListener("DOMContentLoaded", () => {
 
-    const page = document.querySelector(".chapter-select-page");
     const music = document.getElementById("chapterMusic");
+
+    // PAGE ENTRANCE
+    document.body.classList.add("page-entering");
 
     // BACKGROUND MUSIC
     if (music) {
+
         music.volume = 0.35;
 
-        // Browsers may block autoplay until the user interacts.
-        music.play().catch(() => {
-            console.log("Music playback requires user interaction.");
-        });
+        function startMusic() {
+            music.play().catch(() => {
+                console.log("Waiting for music interaction.");
+            });
+        }
+
+        startMusic();
+
+        document.addEventListener("pointerdown", startMusic, { once: true });
+        document.addEventListener("keydown", startMusic, { once: true });
     }
 
-    // PAGE TRANSITIONS
-    const navigationLinks = document.querySelectorAll(
+    // PAGE NAVIGATION
+    let navigating = false;
+
+    const links = document.querySelectorAll(
         ".chapter-button[href], .back-button"
     );
 
-    navigationLinks.forEach(link => {
+    links.forEach(link => {
 
         link.addEventListener("click", event => {
 
+            if (navigating) {
+                event.preventDefault();
+                return;
+            }
+
+            navigating = true;
             event.preventDefault();
 
             const destination = link.href;
 
-            page.classList.add("fade-out");
+            document.body.classList.add("page-leaving");
 
             setTimeout(() => {
                 window.location.href = destination;
-            }, 800);
+            }, 850);
 
         });
 
     });
 
 });
-
-//audio
-
-const music = document.getElementById("chapterMusic");
-
-if (music) {
-    music.volume = 0.35;
-
-    music.play().catch(() => {
-        // Browser may require the user to interact first.
-        document.addEventListener("click", () => {
-            music.play();
-        }, { once: true });
-    });
-}

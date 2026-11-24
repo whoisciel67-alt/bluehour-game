@@ -1,8 +1,4 @@
 
-// ======================================
-// VEYRA — VIDEO CUTSCENE
-// ======================================
-
 document.addEventListener("DOMContentLoaded", () => {
 
     const video = document.getElementById("introVideo");
@@ -10,45 +6,47 @@ document.addEventListener("DOMContentLoaded", () => {
     const skipButton = document.getElementById("skipButton");
     const continueButton = document.getElementById("continueButton");
 
+    if (!video || !cutscene) return;
+
     let hasFinished = false;
 
-    // Reveal cutscene
+    // PAGE ENTRANCE
+    document.body.classList.add("page-entering");
+
     requestAnimationFrame(() => {
         requestAnimationFrame(() => {
             cutscene.classList.add("active");
         });
     });
 
-    // Check video loading
-    video.addEventListener("loadeddata", () => {
-        console.log("VEYRA: Video loaded successfully.");
-    });
-
-    video.addEventListener("error", () => {
-        console.error("VEYRA: Video failed to load.", video.error);
-    });
-
-    // Attempt autoplay WITH sound
-    video.muted = false;
+    // VIDEO SETTINGS
     video.volume = 1;
+    video.muted = false;
 
-    video.play().catch((error) => {
-        console.error("VEYRA: Video autoplay failed:", error);
+    video.play().catch(() => {
+        console.log("Video autoplay requires interaction.");
+
+        cutscene.addEventListener("pointerdown", () => {
+            video.play();
+        }, { once: true });
     });
 
-    // Show Continue when video ends
+    // VIDEO ENDS
     video.addEventListener("ended", () => {
+
         continueButton.hidden = false;
         skipButton.hidden = true;
+
     });
 
-    // Skip video
+    // SKIP
     skipButton.addEventListener("click", finishCutscene);
 
-    // Continue after video
+    // CONTINUE
     continueButton.addEventListener("click", finishCutscene);
 
-    // Finish cutscene
+
+    // FINISH CUTSCENE
     function finishCutscene() {
 
         if (hasFinished) return;
@@ -60,9 +58,12 @@ document.addEventListener("DOMContentLoaded", () => {
         cutscene.classList.remove("active");
         cutscene.classList.add("fade-out");
 
+        document.body.classList.add("page-leaving");
+
         setTimeout(() => {
             window.location.href = "chapter-select.html";
-        }, 1500);
+        }, 1100);
+
     }
 
 });
