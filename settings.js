@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const musicVolume = document.getElementById("musicVolume");
     const sfxVolume = document.getElementById("sfxVolume");
-    const dialogueSize = document.getElementById("dialogueSize");
 
     if (!soundButton || !settingsButton || !settingsOverlay) return;
 
@@ -22,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
         soundEnabled: savedSettings.soundEnabled ?? true,
         musicVolume: savedSettings.musicVolume ?? 70,
         sfxVolume: savedSettings.sfxVolume ?? 85,
-        dialogueSize: savedSettings.dialogueSize ?? "medium"
     };
 
     // Save settings
@@ -60,15 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
             : "♫ SOUND OFF";
     }
 
-    // Apply dialogue text size only
-    function applyDialogueSize() {
-        document.documentElement.style.setProperty(
-            "--veyra-dialogue-size",
-            settings.dialogueSize === "small" ? "14px" :
-            settings.dialogueSize === "large" ? "22px" :
-            "18px"
-        );
-    }
 
     // Open popup
     settingsButton.addEventListener("click", () => {
@@ -121,17 +110,11 @@ document.addEventListener("DOMContentLoaded", () => {
         applyAudioSettings();
     });
 
-    // Dialogue text size
-    dialogueSize.addEventListener("change", () => {
-        settings.dialogueSize = dialogueSize.value;
-        saveSettings();
-        applyDialogueSize();
-    });
+
 
     // Restore saved values in popup
     musicVolume.value = settings.musicVolume;
     sfxVolume.value = settings.sfxVolume;
-    dialogueSize.value = settings.dialogueSize;
 
     document.getElementById("musicVolumeValue").textContent =
         `${settings.musicVolume}%`;
@@ -141,7 +124,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Apply settings
     applyAudioSettings();
-    applyDialogueSize();
 
     // Reapply settings when audio starts playing
     document.addEventListener("play", event => {

@@ -13,9 +13,82 @@
     <!--settings-->
     <link rel="stylesheet" href="settings.css">
     <script src="settings.js" defer></script>
-
-
 </head>
+
+
+<!-- VEYRA GLOBAL CONTROLS -->
+<div id="gameControls">
+
+    <button id="soundToggle" class="game-control-btn">
+        ♫ SOUND ON
+    </button>
+
+    <button id="settingsButton" class="game-control-btn">
+        ⚙ SETTINGS
+    </button>
+
+</div>
+
+<!-- SETTINGS POPUP -->
+<div id="settingsOverlay">
+
+    <div id="settingsPopup">
+
+        <button id="closeSettings" class="settings-close">
+            ×
+        </button>
+
+        <h2 class="settings-heading">Settings</h2>
+
+        <!-- MUSIC -->
+        <div class="settings-option">
+            <label for="musicVolume">
+                Music Volume
+                <span id="musicVolumeValue" class="settings-value">70%</span>
+            </label>
+
+            <input
+                type="range"
+                id="musicVolume"
+                min="0"
+                max="100"
+                value="70"
+            >
+        </div>
+
+        <hr class="settings-divider">
+
+        <!-- SOUND EFFECTS -->
+        <div class="settings-option">
+            <label for="sfxVolume">
+                Sound Effects Volume
+                <span id="sfxVolumeValue" class="settings-value">85%</span>
+            </label>
+
+            <input
+                type="range"
+                id="sfxVolume"
+                min="0"
+                max="100"
+                value="85"
+            >
+        </div>
+
+        <hr class="settings-divider">
+
+        <!-- WEBSITE -->
+        <a
+            href="https://whoisciel67-alt.github.io/bluehour/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="settings-website"
+        >
+            Visit Website ↗
+        </a>
+
+    </div>
+
+</div>
 
 
 <body class="cutscene-page">
