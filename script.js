@@ -1,82 +1,38 @@
-//loading
-window.addEventListener("load", () => {
 
-    // GET ELEMENTS
+document.addEventListener("DOMContentLoaded", () => {
 
     const loadingScreen = document.querySelector(".loading-screen");
     const progress = document.getElementById("progress");
     const percentage = document.getElementById("percentage");
     const loadingText = document.getElementById("loadingText");
-
     const mainMenu = document.getElementById("mainMenu");
-
     const menuMusic = document.getElementById("menuMusic");
     const soundHint = document.getElementById("soundHint");
 
+    if (!loadingScreen || !mainMenu) return;
 
-    // CHECK ELEMENTS
+    // PAGE ENTRANCE
+    document.body.classList.add("page-entering");
 
-    if (!loadingScreen || !progress || !percentage ||
-        !loadingText || !mainMenu || !menuMusic) {
+    // MUSIC
+    if (menuMusic) {
+        menuMusic.volume = 0.35;
 
-        console.error("LUMA ERROR: Missing elements!");
-        return;
+        function startMusic() {
+            menuMusic.play().then(() => {
+                if (soundHint) soundHint.style.display = "none";
+            }).catch(() => {
+                if (soundHint) soundHint.style.display = "block";
+            });
+        }
+
+        window.startMenuMusic = startMusic;
     }
 
-
-    // MUSIC SETTINGS
-
-    menuMusic.volume = 0.35;
-
-    async function startMenuMusic() {
-
-        try {
-
-            await menuMusic.play();
-
-            if (soundHint) {
-                soundHint.style.display = "none";
-            }
-
-        } catch (error) {
-
-            console.log("LUMA: Waiting for user interaction to play music.");
-
-            if (soundHint) {
-                soundHint.style.display = "block";
-            }
-        }
-    }
-
-
-    // ENABLE MUSIC AFTER USER INTERACTION
-
-    function enableMusic() {
-
-        startMenuMusic();
-
-    }
-
-    document.addEventListener("pointerdown", () => {
-        if (mainMenu.style.display === "flex") {
-            enableMusic();
-        }
-    });
-
-    document.addEventListener("keydown", () => {
-        if (mainMenu.style.display === "flex") {
-            enableMusic();
-        }
-    });
-
-
-    // LOADING SETTINGS
-
+    // LOADING SCREEN
     let count = 0;
 
-    const loadingSpeed = 35;
-
-    const loadingMessages = [
+    const messages = [
         { percent: 0, message: "SYNCHRONIZING MEMORIES..." },
         { percent: 20, message: "RESTORING ARCHIVE..." },
         { percent: 40, message: "SEARCHING FOR LOST DATA..." },
@@ -85,35 +41,19 @@ window.addEventListener("load", () => {
         { percent: 100, message: "WELCOME BACK TO VEYRA." }
     ];
 
-
-    // START LOADING
-
     const loadingInterval = setInterval(() => {
 
         count++;
 
-        // UPDATE BAR
         progress.style.width = count + "%";
-
-        // UPDATE PERCENTAGE
         percentage.textContent = count + "%";
 
-
-        // UPDATE MESSAGES
-        for (let i = loadingMessages.length - 1; i >= 0; i--) {
-
-            if (count >= loadingMessages[i].percent) {
-
-                loadingText.textContent = loadingMessages[i].message;
-
+        for (let i = messages.length - 1; i >= 0; i--) {
+            if (count >= messages[i].percent) {
+                loadingText.textContent = messages[i].message;
                 break;
             }
         }
-
-
-        // FINISH LOADING
-
-// FINISH LOADING
 
         if (count >= 100) {
 
@@ -121,114 +61,100 @@ window.addEventListener("load", () => {
 
             setTimeout(() => {
 
-                // FADE OUT LOADING SCREEN
                 loadingScreen.classList.add("fade-out");
 
                 setTimeout(() => {
 
                     loadingScreen.style.display = "none";
-
-                    // SHOW MAIN MENU
                     mainMenu.style.display = "flex";
 
                     requestAnimationFrame(() => {
-                        mainMenu.classList.add("show");
+                        requestAnimationFrame(() => {
+                            mainMenu.classList.add("show");
+                        });
                     });
 
-                    // START MENU MUSIC
-                    startMenuMusic();
+                    if (window.startMenuMusic) {
+                        window.startMenuMusic();
+                    }
 
                 }, 1800);
 
-            }, 700);
-
+            }, 500);
         }
 
-    }, loadingSpeed);
-
-});
+    }, 35);
 
 
-
-// menu sound & nav
-
-const menuButtons = document.querySelectorAll(
-    ".menu-options button"
-);
-
-let clickAudioContext = null;
-
-function playClickSound() {
-
-    // Create audio context when first needed
-    if (!clickAudioContext) {
-
-        clickAudioContext = new (
-            window.AudioContext ||
-            window.webkitAudioContext
-        )();
-
+    // ENABLE MUSIC AFTER INTERACTION
+    function unlockMusic() {
+        if (mainMenu.classList.contains("show") && window.startMenuMusic) {
+            window.startMenuMusic();
+        }
     }
 
-    if (clickAudioContext.state === "suspended") {
-        clickAudioContext.resume();
-    }
+    document.addEventListener("pointerdown", unlockMusic);
+    document.addEventListener("keydown", unlockMusic);
 
-    const oscillator = clickAudioContext.createOscillator();
-    const gain = clickAudioContext.createGain();
 
-    // Soft futuristic chime
-    oscillator.type = "sine";
+    // BUTTON CLICK SOUND
+    let audioContext;
 
-    oscillator.frequency.setValueAtTime(
-        880,
-        clickAudioContext.currentTime
-    );
+    function playClickSound() {
 
-    oscillator.frequency.exponentialRampToValueAtTime(
-        440,
-        clickAudioContext.currentTime + 0.12
-    );
+        const AudioContextClass =
+            window.AudioContext || window.webkitAudioContext;
 
-    gain.gain.setValueAtTime(
-        0.12,
-        clickAudioContext.currentTime
-    );
+        if (!AudioContextClass) return;
 
-    gain.gain.exponentialRampToValueAtTime(
-        0.001,
-        clickAudioContext.currentTime + 0.2
-    );
+        audioContext ||= new AudioContextClass();
 
-    oscillator.connect(gain);
-    gain.connect(clickAudioContext.destination);
-
-    oscillator.start();
-    oscillator.stop(clickAudioContext.currentTime + 0.2);
-
-}
-
-// BUTTON NAVIGATION
-
-menuButtons.forEach(button => {
-
-    button.addEventListener("click", () => {
-
-        const destination = button.dataset.page;
-
-        if (!destination) {
-            return;
+        if (audioContext.state === "suspended") {
+            audioContext.resume();
         }
 
-        // Play button sound
-        playClickSound();
+        const oscillator = audioContext.createOscillator();
+        const gain = audioContext.createGain();
 
-        // Navigate after sound begins
-        setTimeout(() => {
+        const now = audioContext.currentTime;
 
-            window.location.href = destination;
+        oscillator.type = "sine";
+        oscillator.frequency.setValueAtTime(880, now);
+        oscillator.frequency.exponentialRampToValueAtTime(440, now + 0.12);
 
-        }, 250);
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+
+        oscillator.connect(gain);
+        gain.connect(audioContext.destination);
+
+        oscillator.start(now);
+        oscillator.stop(now + 0.2);
+    }
+
+
+    // MENU NAVIGATION
+    let navigating = false;
+
+    document.querySelectorAll(".menu-options button").forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            const destination = button.dataset.page;
+
+            if (!destination || navigating) return;
+
+            navigating = true;
+
+            playClickSound();
+
+            document.body.classList.add("page-leaving");
+
+            setTimeout(() => {
+                window.location.href = destination;
+            }, 750);
+
+        });
 
     });
 
