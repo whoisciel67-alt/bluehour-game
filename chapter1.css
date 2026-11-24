@@ -1,0 +1,602 @@
+:root {
+    --dark-purple: #251052;
+    --purple: #49266F;
+    --lavender: #A879CE;
+    --pink: #FFB5EB;
+    --white-pink: #FFF0FF;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body.chapter-one {
+    margin: 0;
+    overflow: hidden;
+    background: #101329;
+    color: var(--white-pink);
+    font-family: "Average Sans", sans-serif;
+}
+
+button {
+    font-family: "Average Sans", sans-serif;
+    cursor: pointer;
+}
+
+
+/*opening cutscene*/
+
+.cutscene {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: #090b19;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1.5s ease, visibility 1.5s;
+}
+
+.cutscene.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.cutscene video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cutscene-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(8, 10, 30, 0.8),
+        transparent 65%
+    );
+}
+
+.cutscene-caption {
+    position: absolute;
+    left: 8%;
+    bottom: 12%;
+    animation: captionIn 2s ease both;
+}
+
+.cutscene-caption p,
+.cutscene-caption span {
+    letter-spacing: 4px;
+    font-size: 12px;
+    color: var(--pink);
+}
+
+.cutscene-caption h1 {
+    font-family: "Kings", serif;
+    font-size: clamp(48px, 8vw, 100px);
+    font-weight: normal;
+    margin: 12px 0;
+}
+
+.skip-button {
+    position: absolute;
+    right: 5%;
+    bottom: 6%;
+    padding: 12px 20px;
+    color: var(--white-pink);
+    background: rgba(37, 16, 82, 0.5);
+    border: 1px solid rgba(255, 181, 235, 0.5);
+    letter-spacing: 2px;
+    transition: 0.3s ease;
+}
+
+.skip-button:hover {
+    color: var(--dark-purple);
+    background: var(--pink);
+}
+
+
+/*playable scene*/
+
+.platform-scene {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(16, 19, 41, 0.15),
+            rgba(20, 15, 48, 0.65)
+        ),
+        url("images/platform-04.jpg") center / cover no-repeat,
+        #171b38;
+
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1.5s ease;
+}
+
+
+.platform-scene.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.platform-darkness {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    background: linear-gradient(
+        90deg,
+        rgba(10, 13, 35, 0.4),
+        transparent 50%,
+        rgba(10, 13, 35, 0.2)
+    );
+}
+
+
+/*location*/
+
+.location-label {
+    position: absolute;
+    top: 35px;
+    left: 45px;
+    z-index: 2;
+    letter-spacing: 3px;
+    font-size: 11px;
+    color: var(--pink)
+}
+
+.location-label p {
+    color: var(--white-pink);
+    opacity: 0,65;
+}
+
+/*objective*/
+.objective {
+    position: absolute;
+    top: 110px;
+    left: 45px;
+    z-index: 2;
+    border-left: 2px solid var(--pink);
+    padding-left: 14px;
+}
+
+.objective span {
+    color: var(--pink);
+    font-size: 10px;
+    letter-spacing: 3px;
+}
+
+.objective p {
+    margin: 6px 0;
+    font-size: 14px;
+}
+
+/*petal trail*/
+.petal-trail {
+    position: absolute;
+    top: 53%;
+    left: 48%;
+    display: flex;
+    gap: 65px;
+    color: var(--white-pink);
+    text-shadow: 0 0 15px var(--pink);
+    animation: petalFloat 3s ease-in-out infinite alternate;
+    pointer-events: none;
+}
+
+.petal-trail span:nth-child(even) {
+    transform: translateY(-25px);
+}
+
+.petal-trail span {
+    font-size: 20px;
+    opacity: 0.8;
+}
+
+
+/*player*/
+.player {
+    position: absolute;
+    bottom: 12%;
+    left: 12%;
+    width: 45px;
+    height: 100px;
+    z-index: 5;
+    transition: left 0.12s linear;
+}
+
+.player-silhouette {
+    position: absolute;
+    bottom: 0;
+    left: 12px;
+    width: 22px;
+    height: 68px;
+    background: #10101f;
+    border-radius: 45% 45% 10% 10%;
+    box-shadow: 0 0 20px rgba(168, 121, 206, 0.2);
+}
+
+.player-silhouette::before {
+    content: "";
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    top: -19px;
+    left: 0;
+    border-radius: 50%;
+    background: #171629;
+}
+
+.player-light {
+    position: absolute;
+    bottom: -8px;
+    left: -15px;
+    width: 75px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(255, 181, 235, 0.2);
+    filter: blur(10px);
+}
+
+/*ticket gate*/
+.ticket-gate {
+    position: absolute;
+    bottom: 12%;
+    left: 75%;
+    z-index: 4;
+
+    width: 130px;
+    height: 150px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+
+    color: var(--white-pink);
+    background: rgba(22, 22, 54, 0.65);
+    border: 1px solid rgba(255, 181, 235, 0.45);
+
+    transition: 0.4s ease;
+}
+
+.ticket-gate:hover {
+    border-color: var(--pink);
+    box-shadow: 0 0 30px rgba(255, 181, 235, 0.25);
+}
+
+.gate-label {
+    letter-spacing: 3px;
+    font-size: 12px;
+}
+
+.gate-prompt {
+    color: var(--pink);
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+.gate-glow {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        transparent,
+        rgba(255, 181, 235, 0.1),
+        transparent
+    );
+    pointer-events: none;
+}
+
+.ticket-gate.unlocked {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+
+/*MOVEMENT HINT*/
+
+.movement-hint {
+    position: absolute;
+    bottom: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: rgba(255, 240, 255, 0.7);
+}
+
+.movement-hint span {
+    color: var(--pink);
+}
+
+/*dialouge*/
+
+.dialogue-box {
+    position: absolute;
+    bottom: 35px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+
+    width: min(600px, 85%);
+    padding: 22px 28px;
+
+    background: rgba(18, 15, 43, 0.94);
+    border: 1px solid rgba(168, 121, 206, 0.5);
+
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.4s ease;
+    z-index: 15;
+}
+
+.dialogue-box.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.dialogue-speaker {
+    color: var(--pink);
+    font-size: 10px;
+    letter-spacing: 3px;
+}
+
+#dialogueText {
+    line-height: 1.8;
+}
+
+#dialogueContinue {
+    display: block;
+    margin-left: auto;
+    color: var(--pink);
+    background: none;
+    border: none;
+    letter-spacing: 2px;
+}
+
+
+/*memory panel*/
+
+.memory-panel {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 25px;
+    background: rgba(8, 9, 27, 0.88);
+    backdrop-filter: blur(12px);
+
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s ease;
+}
+
+.memory-panel.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.memory-content {
+    width: min(850px, 100%);
+    text-align: center;
+}
+
+.memory-label {
+    color: var(--pink);
+    letter-spacing: 4px;
+    font-size: 10px;
+}
+
+.memory-content h2 {
+    font-family: "Kings", serif;
+    font-size: clamp(35px, 5vw, 55px);
+    font-weight: normal;
+    margin: 12px 0;
+}
+
+.memory-description {
+    color: rgba(255, 240, 255, 0.7);
+    line-height: 1.7;
+}
+
+.memory-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin: 35px 0 20px;
+}
+
+.memory-card {
+    min-height: 210px;
+    padding: 25px;
+    text-align: left;
+
+    color: var(--white-pink);
+    background: rgba(73, 38, 111, 0.2);
+    border: 1px solid rgba(168, 121, 206, 0.4);
+
+    transition: 0.35s ease;
+}
+
+.memory-card:hover,
+.memory-card.selected {
+    border-color: var(--pink);
+    background: rgba(168, 121, 206, 0.18);
+    box-shadow: 0 0 25px rgba(255, 181, 235, 0.1);
+    transform: translateY(-4px);
+}
+
+.memory-type {
+    color: var(--pink);
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+.memory-card h3 {
+    font-size: 15px;
+    letter-spacing: 2px;
+}
+
+.memory-card p {
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+.memory-select {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--lavender);
+}
+
+.memory-feedback {
+    min-height: 20px;
+    color: var(--pink);
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.align-button {
+    display: block;
+    margin: 15px auto;
+    padding: 13px 35px;
+
+    color: var(--dark-purple);
+    background: var(--pink);
+    border: 1px solid var(--pink);
+    letter-spacing: 3px;
+
+    transition: 0.3s ease;
+}
+
+.align-button:hover:not(:disabled) {
+    background: var(--white-pink);
+    box-shadow: 0 0 25px rgba(255, 181, 235, 0.3);
+}
+
+.align-button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.memory-close {
+    color: rgba(255, 240, 255, 0.6);
+    background: none;
+    border: none;
+    letter-spacing: 2px;
+    font-size: 10px;
+}
+
+/*gate unlock*/
+
+.gate-message {
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(12, 12, 35, 0.85);
+    text-align: center;
+
+    opacity: 0;
+    visibility: hidden;
+    transition: 1s ease;
+}
+
+.gate-message.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.gate-message span {
+    color: var(--pink);
+    letter-spacing: 4px;
+    font-size: 11px;
+}
+
+.gate-message h2 {
+    font-family: "Kings", serif;
+    font-size: clamp(40px, 6vw, 65px);
+    font-weight: normal;
+}
+
+.gate-message p {
+    color: rgba(255, 240, 255, 0.7);
+}
+
+.gate-message button {
+    margin-top: 25px;
+    padding: 12px 25px;
+    color: var(--dark-purple);
+    background: var(--pink);
+    border: none;
+    letter-spacing: 2px;
+}
+
+
+/*animations*/
+@keyframes petalFloat {
+    from { transform: translateX(0) translateY(0); }
+    to { transform: translateX(25px) translateY(-12px); }
+}
+
+@keyframes captionIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/*responsive*/
+@media (max-width: 650px) {
+
+    .location-label,
+    .objective {
+        left: 20px;
+    }
+
+    .memory-options {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .memory-card {
+        min-height: 150px;
+        padding: 17px;
+    }
+
+    .memory-panel {
+        overflow-y: auto;
+        align-items: flex-start;
+    }
+
+    .ticket-gate {
+        left: 72%;
+        width: 100px;
+    }
+
+    .petal-trail {
+        left: 35%;
+        gap: 30px;
+    }
+}
