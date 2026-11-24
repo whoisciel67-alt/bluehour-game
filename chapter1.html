@@ -91,20 +91,31 @@
 </div>
 
 <!--opening cutscene for chapter 1-->
+
 <section id="openingCutscene" class="cutscene active">
-    <video id="openingVideo" playsinline>
+
+    <video id="openingVideo" playsinline preload="auto">
         <source src="videos/platform-opening.mp4" type="video/mp4">
     </video>
 
-    <div c;ass="cutscene-caption">
+    <div class="cutscene-overlay"></div>
+
+    <div class="cutscene-caption">
         <p>VEYRA TRANSIT STATION</p>
         <h1>PLATFORM 04</h1>
         <span>Six years later.</span>
     </div>
 
-    <button id="skipCutscene" class="skipbutton">SKIP</button>
+    <button id="playCutscene" class="skip-button">
+        PLAY INTRO →
+    </button>
+
+    <button id="skipCutscene" class="skip-button">
+        SKIP INTRO →
+    </button>
 
 </section>
+
 
 <!--playable-->
 <main id="platformScene" class="platform-scene">
