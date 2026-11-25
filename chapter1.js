@@ -24,8 +24,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const continueAfterGate = document.getElementById("continueAfterGate");
 
     const music = document.getElementById("chapterMusic");
-    const gateSfx = document.getElementById("gateSfx");
+    function startMusic() {
+        if (!music) return;
 
+        music.volume = 0.7;
+
+        music.play().catch(error => {
+            console.error("Music playback failed:", error);
+        });
+    }
 
     // =====================================
     // GAME STATE
@@ -67,13 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
         cutscene.classList.remove("active");
         platform.classList.add("active");
 
-        if (music) {
-            music.volume = 0.7;
-
-            music.play().catch(() => {
-                console.log("Music playback requires interaction.");
-            });
-        }
+        startMusic();
     }
 
     // Player clicks to start video WITH sound
@@ -223,11 +224,6 @@ document.addEventListener("DOMContentLoaded", () => {
         gateUnlocked = true;
 
         ticketGate.classList.add("unlocked");
-
-        if (gateSfx) {
-            gateSfx.currentTime = 0;
-            gateSfx.play().catch(() => {});
-        }
 
         // Slightly brighten the platform
         platform.style.filter = "brightness(1.2)";
