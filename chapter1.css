@@ -1045,3 +1045,27 @@ button {
     }
 
 }
+
+/*back button*/
+
+.back-button {
+    display: block;
+    margin: 15px auto;
+    padding: 12px 25px;
+
+    color: var(--white-pink);
+    background: transparent;
+    border: 1px solid var(--lavender);
+
+    font-family: "Average Sans", sans-serif;
+    letter-spacing: 2px;
+
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.back-button:hover {
+    color: var(--dark-purple);
+    background: var(--pink);
+    border-color: var(--pink);
+}

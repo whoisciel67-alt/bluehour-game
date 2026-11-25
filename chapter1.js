@@ -29,7 +29,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const memoryOptions = document.getElementById("memoryOptions");
     const memoryFeedback = document.getElementById("memoryFeedback");
     const alignButton = document.getElementById("alignMemory");
+
     const closeMemory = document.getElementById("closeMemory");
+    const backFromMemory = document.getElementById("backFromMemory");
+    const backFromStory = document.getElementById("backFromStory");
 
     const storyMessage = document.getElementById("storyMessage");
     const messageLabel = document.getElementById("messageLabel");
@@ -46,6 +49,47 @@ document.addEventListener("DOMContentLoaded", () => {
     const objectiveText = document.getElementById("objectiveText");
     const movementHint = document.getElementById("movementHint");
     const finishChapter = document.getElementById("finishChapter");
+
+
+    // =====================================
+    // CHECK REQUIRED ELEMENTS
+    // =====================================
+
+    const requiredElements = {
+        cutscene,
+        video,
+        playButton,
+        skipButton,
+        platform,
+        glassScene,
+        archiveScene,
+        endingScene,
+        player,
+        ticketGate,
+        memoryPanel,
+        memoryLabel,
+        memoryTitle,
+        memoryDescription,
+        memoryOptions,
+        memoryFeedback,
+        alignButton,
+        storyMessage,
+        messageLabel,
+        messageTitle,
+        messageText,
+        continueStory
+    };
+
+    for (const [name, element] of Object.entries(requiredElements)) {
+        if (!element) {
+            console.error(`Chapter 1 is missing an HTML element: ${name}`);
+        }
+    }
+
+    if (Object.values(requiredElements).some(element => !element)) {
+        console.error("Chapter 1 could not initialize. Check the missing HTML IDs above.");
+        return;
+    }
 
 
     // =====================================
@@ -73,6 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // =====================================
 
     function startMusic() {
+
         if (!music) return;
 
         music.volume = 0.7;
@@ -80,6 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
         music.play().catch(error => {
             console.warn("Background music could not start:", error);
         });
+
     }
 
 
@@ -99,7 +145,9 @@ document.addEventListener("DOMContentLoaded", () => {
         platform.classList.add("active");
 
         startMusic();
+
     }
+
 
     playButton.addEventListener("click", () => {
 
@@ -115,7 +163,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
 
+
     skipButton.addEventListener("click", startPlatform);
+
     video.addEventListener("ended", startPlatform);
 
 
@@ -133,10 +183,16 @@ document.addEventListener("DOMContentLoaded", () => {
         scene.classList.add("active");
 
         panelOpen = false;
-        memoryPanel.classList.remove("show");
 
-        dialogueBox.classList.remove("show");
+        memoryPanel.classList.remove("show");
+        dialogueBox?.classList.remove("show");
         storyMessage.classList.remove("show");
+
+        // Stop movement when changing scenes.
+        Object.keys(keys).forEach(key => {
+            keys[key] = false;
+        });
+
     }
 
 
@@ -152,111 +208,204 @@ document.addEventListener("DOMContentLoaded", () => {
 
         alignButton.disabled = true;
 
+
+        // ---------------------------------
+        // STAGE 1: PLATFORM 04
+        // ---------------------------------
+
         if (stage === 1) {
 
             memoryLabel.textContent = "LUMA MEMORY ARCHIVE";
+
             memoryTitle.textContent = "Conflicting Memories";
 
             memoryDescription.textContent =
                 "Two records. One forgotten moment. Which memory will you trust?";
 
             memoryOptions.innerHTML = `
+
                 <button class="memory-card" data-memory="official">
-                    <span class="memory-type">01 — LUMA OFFICIAL LOG</span>
+
+                    <span class="memory-type">
+                        01 — LUMA OFFICIAL LOG
+                    </span>
+
                     <h3>Departure Record</h3>
+
                     <p>
                         Passenger departed Veyra six years ago.
                         Return ticket never purchased.
                     </p>
-                    <span class="memory-select">SELECT RECORD →</span>
+
+                    <span class="memory-select">
+                        SELECT RECORD →
+                    </span>
+
                 </button>
 
+
                 <button class="memory-card" data-memory="mother">
-                    <span class="memory-type">02 — MOTHER'S UNFINISHED FRAGMENT</span>
+
+                    <span class="memory-type">
+                        02 — MOTHER'S UNFINISHED FRAGMENT
+                    </span>
+
                     <h3>A Familiar Promise</h3>
+
                     <p>
                         I left a pass at the gate under the old
                         cherry-blossom hologram, just in case you ever came back.
                     </p>
-                    <span class="memory-select">SELECT MEMORY →</span>
+
+                    <span class="memory-select">
+                        SELECT MEMORY →
+                    </span>
+
                 </button>
+
             `;
 
-            memoryFeedback.textContent = "Select a memory to continue.";
+            memoryFeedback.textContent =
+                "Select a memory to continue.";
+
         }
 
 
+        // ---------------------------------
+        // STAGE 2: GLASS OVERLOOK
+        // ---------------------------------
+
         if (stage === 2) {
 
-            memoryLabel.textContent = "RECOVERED AUDIO // UNKNOWN DATE";
-            memoryTitle.textContent = "A Voice From Somewhere";
+            memoryLabel.textContent =
+                "RECOVERED AUDIO // UNKNOWN DATE";
+
+            memoryTitle.textContent =
+                "A Voice From Somewhere";
 
             memoryDescription.textContent =
                 "The recording is damaged. How much of it will you listen to?";
 
             memoryOptions.innerHTML = `
+
                 <button class="memory-card" data-memory="listen">
-                    <span class="memory-type">01 — COMPLETE RECORDING</span>
+
+                    <span class="memory-type">
+                        01 — COMPLETE RECORDING
+                    </span>
+
                     <h3>Keep Listening</h3>
+
                     <p>
                         Let the recording play until the end.
                         There may be something worth hearing.
                     </p>
-                    <span class="memory-select">LISTEN →</span>
+
+                    <span class="memory-select">
+                        LISTEN →
+                    </span>
+
                 </button>
 
+
                 <button class="memory-card" data-memory="stop">
-                    <span class="memory-type">02 — INTERRUPTED RECORDING</span>
+
+                    <span class="memory-type">
+                        02 — INTERRUPTED RECORDING
+                    </span>
+
                     <h3>Stop Here</h3>
+
                     <p>
                         That voice is familiar.
                         Perhaps hearing more isn't necessary.
                     </p>
-                    <span class="memory-select">STOP RECORDING →</span>
+
+                    <span class="memory-select">
+                        STOP RECORDING →
+                    </span>
+
                 </button>
+
             `;
 
-            memoryFeedback.textContent = "The recorder clicks softly.";
+            memoryFeedback.textContent =
+                "The recorder clicks softly.";
+
         }
 
 
+        // ---------------------------------
+        // STAGE 3: LOCAL ARCHIVE
+        // ---------------------------------
+
         if (stage === 3) {
 
-            memoryLabel.textContent = "LUMA LOCAL ARCHIVE";
-            memoryTitle.textContent = "Things Left Behind";
+            memoryLabel.textContent =
+                "LUMA LOCAL ARCHIVE";
+
+            memoryTitle.textContent =
+                "Things Left Behind";
 
             memoryDescription.textContent =
                 "Two archive categories remain accessible. Which one will you investigate?";
 
             memoryOptions.innerHTML = `
+
                 <button class="memory-card" data-memory="personal">
-                    <span class="memory-type">01 — PERSONAL ARCHIVE</span>
+
+                    <span class="memory-type">
+                        01 — PERSONAL ARCHIVE
+                    </span>
+
                     <h3>Childhood Records</h3>
+
                     <p>
                         Photographs, saved messages, and fragments
                         from a life once lived here.
                     </p>
-                    <span class="memory-select">OPEN ARCHIVE →</span>
+
+                    <span class="memory-select">
+                        OPEN ARCHIVE →
+                    </span>
+
                 </button>
 
+
                 <button class="memory-card" data-memory="transit">
-                    <span class="memory-type">02 — TRANSIT ARCHIVE</span>
+
+                    <span class="memory-type">
+                        02 — TRANSIT ARCHIVE
+                    </span>
+
                     <h3>Official Records</h3>
+
                     <p>
                         Passenger history, departure logs,
                         and records modified by LUMA.
                     </p>
-                    <span class="memory-select">OPEN RECORDS →</span>
+
+                    <span class="memory-select">
+                        OPEN RECORDS →
+                    </span>
+
                 </button>
+
             `;
 
-            memoryFeedback.textContent = "Choose an archive to investigate.";
+            memoryFeedback.textContent =
+                "Choose an archive to investigate.";
+
         }
 
 
         memoryPanel.classList.add("show");
 
-        // Add selection events to the newly created cards
+
+        // ---------------------------------
+        // MEMORY SELECTION
+        // ---------------------------------
+
         document.querySelectorAll(".memory-card").forEach(card => {
 
             card.addEventListener("click", () => {
@@ -268,6 +417,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 card.classList.add("selected");
 
                 selectedMemory = card.dataset.memory;
+
                 alignButton.disabled = false;
 
                 memoryFeedback.textContent =
@@ -292,33 +442,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (distance > interactionDistance) {
 
-            memoryFeedback.textContent = "You are too far from the gate.";
+            memoryFeedback.textContent =
+                "You are too far from the gate.";
+
+            console.log("Move closer to the ticket gate.");
 
             return;
         }
 
         openChoicePanel(1);
+
     }
+
 
     ticketGate.addEventListener("click", inspectGate);
 
 
-    recorderButton.addEventListener("click", () => {
+    if (recorderButton) {
 
-        if (panelOpen) return;
+        recorderButton.addEventListener("click", () => {
 
-        openChoicePanel(2);
+            if (panelOpen) return;
 
-    });
+            openChoicePanel(2);
+
+        });
+
+    }
 
 
-    archiveTerminal.addEventListener("click", () => {
+    if (archiveTerminal) {
 
-        if (panelOpen) return;
+        archiveTerminal.addEventListener("click", () => {
 
-        openChoicePanel(3);
+            if (panelOpen) return;
 
-    });
+            openChoicePanel(3);
+
+        });
+
+    }
 
 
     // =====================================
@@ -330,7 +493,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!selectedMemory) return;
 
 
+        // ---------------------------------
         // SCENE 1: PLATFORM 04
+        // ---------------------------------
 
         if (currentStage === 1) {
 
@@ -340,34 +505,50 @@ document.addEventListener("DOMContentLoaded", () => {
                     "The record remains unchanged. Something is missing.";
 
                 return;
+
             }
 
-            gateUnlocked = true;
 
-            ticketGate.classList.add("unlocked");
+            if (selectedMemory === "mother") {
 
-            platform.style.filter = "brightness(1.2)";
+                gateUnlocked = true;
 
-            memoryPanel.classList.remove("show");
-            panelOpen = false;
+                ticketGate.classList.add("unlocked");
 
-            showStoryMessage(
-                "MEMORY RESTORED",
-                "The gate remembers.",
-                "A familiar promise opens the frozen barrier."
-            );
+                platform.style.filter = "brightness(1.2)";
 
-            return;
+                memoryPanel.classList.remove("show");
+
+                panelOpen = false;
+
+                showStoryMessage(
+                    "MEMORY RESTORED",
+                    "The gate remembers.",
+                    "A familiar promise opens the frozen barrier."
+                );
+
+                return;
+
+            }
+
         }
 
 
+        // ---------------------------------
         // SCENE 2: GLASS OVERLOOK
+        // ---------------------------------
 
         if (currentStage === 2) {
 
             if (selectedMemory === "listen") {
 
-                recorderAudio.play().catch(() => {});
+                if (recorderAudio) {
+                    recorderAudio.currentTime = 0;
+
+                    recorderAudio.play().catch(error => {
+                        console.warn("Recording could not play:", error);
+                    });
+                }
 
                 showStoryMessage(
                     "RECORDING RECOVERED",
@@ -377,8 +558,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
             } else {
 
-                recorderAudio.pause();
-                recorderAudio.currentTime = 0;
+                if (recorderAudio) {
+                    recorderAudio.pause();
+                    recorderAudio.currentTime = 0;
+                }
 
                 showStoryMessage(
                     "RECORDING INTERRUPTED",
@@ -389,13 +572,17 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             memoryPanel.classList.remove("show");
+
             panelOpen = false;
 
             return;
+
         }
 
 
+        // ---------------------------------
         // SCENE 3: LOCAL ARCHIVE
+        // ---------------------------------
 
         if (currentStage === 3) {
 
@@ -418,6 +605,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             memoryPanel.classList.remove("show");
+
             panelOpen = false;
 
         }
@@ -432,11 +620,53 @@ document.addEventListener("DOMContentLoaded", () => {
     function showStoryMessage(label, title, message) {
 
         messageLabel.textContent = label;
+
         messageTitle.textContent = title;
+
         messageText.textContent = message;
 
         storyMessage.classList.add("show");
+
     }
+
+
+    // =====================================
+    // BACK BUTTONS
+    // =====================================
+
+    // Back from the memory selection panel to the scene.
+    // Supports either backFromMemory or the older closeMemory ID.
+
+    function closeChoicePanel() {
+
+        memoryPanel.classList.remove("show");
+
+        panelOpen = false;
+
+        selectedMemory = null;
+
+        alignButton.disabled = true;
+
+    }
+
+
+    backFromMemory?.addEventListener("click", closeChoicePanel);
+
+    closeMemory?.addEventListener("click", closeChoicePanel);
+
+
+    // Back from the story message to the previous choice panel.
+    // The selected choice is preserved.
+
+    backFromStory?.addEventListener("click", () => {
+
+        storyMessage.classList.remove("show");
+
+        memoryPanel.classList.add("show");
+
+        panelOpen = true;
+
+    });
 
 
     // =====================================
@@ -448,34 +678,49 @@ document.addEventListener("DOMContentLoaded", () => {
         storyMessage.classList.remove("show");
 
 
+        // ---------------------------------
         // AFTER PLATFORM 04
+        // ---------------------------------
 
         if (currentStage === 1) {
 
             currentStage = 2;
 
-            objectiveText.textContent =
-                "Find the source of the recording.";
+            if (objectiveText) {
+                objectiveText.textContent =
+                    "Find the source of the recording.";
+            }
 
             changeScene(glassScene);
 
             return;
+
         }
 
 
+        // ---------------------------------
         // AFTER GLASS OVERLOOK
+        // ---------------------------------
 
         if (currentStage === 2) {
 
             currentStage = 3;
 
+            if (objectiveText) {
+                objectiveText.textContent =
+                    "Investigate the local archive.";
+            }
+
             changeScene(archiveScene);
 
             return;
+
         }
 
 
+        // ---------------------------------
         // AFTER LOCAL ARCHIVE
+        // ---------------------------------
 
         if (currentStage === 3) {
 
@@ -489,47 +734,58 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // =====================================
-    // CLOSE CHOICE PANEL
-    // =====================================
-
-    closeMemory.addEventListener("click", () => {
-
-        panelOpen = false;
-        memoryPanel.classList.remove("show");
-
-    });
-
-
-    // =====================================
     // PLAYER MOVEMENT
     // =====================================
 
     document.addEventListener("keydown", event => {
 
+        const key = event.key.toLowerCase();
+
+
+        // Prevent page scrolling with movement keys.
         if (
-            ["ArrowLeft", "ArrowRight", " "].includes(event.key)
+            ["arrowleft", "arrowright", " ", "arrowup", "arrowdown"].includes(key)
         ) {
             event.preventDefault();
         }
 
-        if (!sceneStarted || panelOpen || storyMessage.classList.contains("show")) {
+
+        // Do not move while the cutscene or a panel is active.
+        if (
+            !sceneStarted ||
+            panelOpen ||
+            storyMessage.classList.contains("show")
+        ) {
             return;
         }
 
-        keys[event.key.toLowerCase()] = true;
 
-        if (event.key.toLowerCase() === "e") {
+        // Record pressed keys.
+        keys[key] = true;
+
+
+        // ---------------------------------
+        // INTERACTION KEY: E
+        // ---------------------------------
+
+        if (key === "e") {
 
             if (platform.classList.contains("active")) {
+
                 inspectGate();
+
             }
 
             if (glassScene.classList.contains("active")) {
+
                 openChoicePanel(2);
+
             }
 
             if (archiveScene.classList.contains("active")) {
+
                 openChoicePanel(3);
+
             }
 
         }
@@ -538,9 +794,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     document.addEventListener("keyup", event => {
+
         keys[event.key.toLowerCase()] = false;
+
     });
 
+
+    // Stop movement if the browser window loses focus.
+    window.addEventListener("blur", () => {
+
+        Object.keys(keys).forEach(key => {
+            keys[key] = false;
+        });
+
+    });
+
+
+    // =====================================
+    // MOVEMENT UPDATE
+    // =====================================
 
     function updateMovement() {
 
@@ -548,24 +820,39 @@ document.addEventListener("DOMContentLoaded", () => {
             sceneStarted &&
             platform.classList.contains("active") &&
             !panelOpen &&
-            !gateUnlocked
+            !storyMessage.classList.contains("show")
         ) {
 
             if (keys["arrowright"] || keys["d"]) {
+
                 playerPosition += moveSpeed;
+
             }
 
             if (keys["arrowleft"] || keys["a"]) {
+
                 playerPosition -= moveSpeed;
+
             }
 
-            playerPosition = Math.max(5, Math.min(playerPosition, 90));
 
+            // Keep player inside the platform.
+            playerPosition = Math.max(
+                5,
+                Math.min(playerPosition, 90)
+            );
+
+
+            // Update player position.
             player.style.left = `${playerPosition}%`;
+
         }
 
+
         requestAnimationFrame(updateMovement);
+
     }
+
 
     updateMovement();
 
@@ -574,8 +861,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // DIALOGUE CONTROLS
     // =====================================
 
-    dialogueContinue.addEventListener("click", () => {
+    dialogueContinue?.addEventListener("click", () => {
+
         dialogueBox.classList.remove("show");
+
     });
 
 
@@ -583,10 +872,17 @@ document.addEventListener("DOMContentLoaded", () => {
     // CHAPTER END
     // =====================================
 
-    finishChapter.addEventListener("click", () => {
+    finishChapter?.addEventListener("click", () => {
 
         window.location.href = "chapter2.html";
 
     });
+
+
+    // =====================================
+    // INITIALIZATION
+    // =====================================
+
+    console.log("VEYRA Chapter 1 initialized successfully.");
 
 });
