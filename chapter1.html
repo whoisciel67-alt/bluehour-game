@@ -1,171 +1,228 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VEYRA - Chapter 01</title>
+
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="chapter1.css">
-    <script src="chapter1.js" defer></script>
-    <!--google fonts-->
+    <link rel="stylesheet" href="settings.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kings&family=Average+Sans&display=swap" rel="stylesheet">
-    <!--settings-->
-    <link rel="stylesheet" href="settings.css">
+
     <script src="settings.js" defer></script>
+    <script src="chapter1.js" defer></script>
 </head>
-
-<!-- VEYRA GLOBAL CONTROLS -->
-<div id="gameControls">
-
-    <button id="soundToggle" class="game-control-btn">
-        ♫ SOUND ON
-    </button>
-
-    <button id="settingsButton" class="game-control-btn">
-        ⚙ SETTINGS
-    </button>
-
-</div>
-
-<!-- SETTINGS POPUP -->
-<div id="settingsOverlay">
-
-    <div id="settingsPopup">
-
-        <button id="closeSettings" class="settings-close">
-            ×
-        </button>
-
-        <h2 class="settings-heading">Settings</h2>
-
-        <!-- MUSIC -->
-        <div class="settings-option">
-            <label for="musicVolume">
-                Music Volume
-                <span id="musicVolumeValue" class="settings-value">70%</span>
-            </label>
-
-            <input
-                type="range"
-                id="musicVolume"
-                min="0"
-                max="100"
-                value="70"
-            >
-        </div>
-
-        <hr class="settings-divider">
-
-        <!-- SOUND EFFECTS -->
-        <div class="settings-option">
-            <label for="sfxVolume">
-                Sound Effects Volume
-                <span id="sfxVolumeValue" class="settings-value">85%</span>
-            </label>
-
-            <input
-                type="range"
-                id="sfxVolume"
-                min="0"
-                max="100"
-                value="85"
-            >
-        </div>
-
-        <hr class="settings-divider">
-
-        <!-- WEBSITE -->
-        <a
-            href="https://whoisciel67-alt.github.io/bluehour/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="settings-website"
-        >
-            Visit Website ↗
-        </a>
-
-    </div>
-
-</div>
 
 <body class="chapter-one">
 
+    <!-- GLOBAL CONTROLS -->
+    <div id="gameControls">
+        <button id="soundToggle" class="game-control-btn">♫ SOUND ON</button>
+        <button id="settingsButton" class="game-control-btn">⚙ SETTINGS</button>
+    </div>
+
+    <!-- SETTINGS -->
+    <div id="settingsOverlay">
+        <div id="settingsPopup">
+            <button id="closeSettings" class="settings-close">×</button>
+            <h2 class="settings-heading">Settings</h2>
+
+            <div class="settings-option">
+                <label for="musicVolume">
+                    Music Volume
+                    <span id="musicVolumeValue" class="settings-value">70%</span>
+                </label>
+                <input type="range" id="musicVolume" min="0" max="100" value="70">
+            </div>
+
+            <hr class="settings-divider">
+
+            <div class="settings-option">
+                <label for="sfxVolume">
+                    Sound Effects Volume
+                    <span id="sfxVolumeValue" class="settings-value">85%</span>
+                </label>
+                <input type="range" id="sfxVolume" min="0" max="100" value="85">
+            </div>
+
+            <hr class="settings-divider">
+
+            <a href="https://whoisciel67-alt.github.io/bluehour/"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="settings-website">
+                Visit Website ↗
+            </a>
+        </div>
+    </div>
+
+    <!-- BACKGROUND MUSIC -->
     <audio id="chapterMusic" src="audio/platform-ambience.mp3" loop preload="auto"></audio>
-<!--opening cutscene for chapter 1-->
 
-<section id="openingCutscene" class="cutscene active">
+    <!-- OPENING CUTSCENE -->
+    <section id="openingCutscene" class="cutscene active">
+        <video id="openingVideo" playsinline preload="auto">
+            <source src="videos/platform-opening.mp4" type="video/mp4">
+        </video>
 
-    <video id="openingVideo" playsinline preload="auto">
-        <source src="videos/platform-opening.mp4" type="video/mp4">
-    </video>
+        <div class="cutscene-overlay"></div>
 
-    <div class="cutscene-overlay"></div>
+        <div class="cutscene-caption">
+            <p>VEYRA TRANSIT STATION</p>
+            <h1>PLATFORM 04</h1>
+            <span>Six years later.</span>
+        </div>
 
-    <div class="cutscene-caption">
-        <p>VEYRA TRANSIT STATION</p>
-        <h1>PLATFORM 04</h1>
-        <span>Six years later.</span>
-    </div>
+        <button id="playCutscene" class="skip-button">PLAY INTRO →</button>
+        <button id="skipCutscene" class="skip-button">SKIP INTRO →</button>
+    </section>
 
-    <button id="playCutscene" class="skip-button">
-        PLAY INTRO →
-    </button>
+    <!-- SCENE 1: PLATFORM 04 -->
+    <main id="platformScene" class="platform-scene active-scene">
 
-    <button id="skipCutscene" class="skip-button">
-        SKIP INTRO →
-    </button>
+        <div class="platform-darkness"></div>
 
-</section>
+        <div class="location-label">
+            <span>VEYRA TRANSIT STATION</span>
+            <p>PLATFORM 04 · 05:42 AM</p>
+        </div>
 
+        <div class="objective">
+            <span>OBJECTIVE</span>
+            <p id="objectiveText">Follow the drifting lights.</p>
+        </div>
 
-<!--playable-->
-<main id="platformScene" class="platform-scene">
-    <div class="platform-darkness"></div>
+        <div class="petal-trail" aria-hidden="true">
+            <span>✦</span><span>✧</span><span>✦</span><span>✧</span><span>✦</span>
+        </div>
 
-    <!--location-->
-    <div class="location-label">
-        <span>VEYRA TRANSIT STATION</span>
-        <p>PLATFORM 04 · 05:42 AM</p>
-    </div>
+        <button id="ticketGate" class="ticket-gate">
+            <span class="gate-glow"></span>
+            <span class="gate-label">LUMA ACCESS</span>
+            <span class="gate-prompt">[ E ] INSPECT</span>
+        </button>
 
-    <!--Objective-->
-    <div class="objective">
-        <span>OBJECTIVE</span>
-        <p>Follow the drifting lights.</p>
-    </div>
+        <div id="player" class="player">
+            <div class="player-light"></div>
+            <div class="player-silhouette"></div>
+        </div>
 
-    <!--petal trail-->
-    <div class="petal-trail" aria-hidden="true">
-        <span>✦</span>
-        <span>✧</span>
-        <span>✦</span>
-        <span>✧</span>
-        <span>✦</span>
-    </div>
+        <div id="movementHint" class="movement-hint">
+            <span>← →</span> MOVE <span>A / D</span>
+            <span> E </span> INTERACT
+        </div>
+    </main>
 
-    <!-- TICKET GATE -->
-    <button id="ticketGate" class="ticket-gate" aria-label="Inspect the ticket gate">
-        <span class="gate-glow"></span>
-        <span class="gate-label">LUMA ACCESS</span>
-        <span class="gate-prompt">[ E ] INSPECT</span>
-    </button>
+    <!-- SCENE 2: GLASS OVERLOOK -->
+    <section id="glassScene" class="story-scene glass-scene">
 
-    <!-- MEMORY PANEL -->
-    <div id="memoryPanel" class="memory-panel">
-        <div class="memory-content">
+        <div class="scene-shade"></div>
 
-            <span class="memory-label">LUMA MEMORY ARCHIVE</span>
+        <div class="location-label">
+            <span>VEYRA OBSERVATION DECK</span>
+            <p>GLASS OVERLOOK · 05:56 AM</p>
+        </div>
 
-            <h2>Conflicting Memories</h2>
+        <div class="objective">
+            <span>OBJECTIVE</span>
+            <p>Something was left behind.</p>
+        </div>
 
-            <p class="memory-description">
-                Two records. One forgotten moment.
-                Which memory will you trust?
+        <div class="overlook-description">
+            <span>MEMORY FRAGMENT DETECTED</span>
+            <p>The city looks familiar from here.</p>
+        </div>
+
+        <button id="recorderButton" class="scene-object recorder-object">
+            <span class="object-glow"></span>
+            <span>◉</span>
+            <strong>VOICE RECORDER</strong>
+            <small>[ E ] LISTEN</small>
+        </button>
+
+        <div class="scene-bottom-hint">
+            A forgotten recording is waiting.
+        </div>
+    </section>
+
+    <!-- SCENE 3: LOCAL ARCHIVE -->
+    <section id="archiveScene" class="story-scene archive-scene">
+
+        <div class="scene-shade"></div>
+
+        <div class="location-label">
+            <span>VEYRA LOCAL NETWORK</span>
+            <p>LOCAL ARCHIVE · 06:08 AM</p>
+        </div>
+
+        <div class="objective">
+            <span>OBJECTIVE</span>
+            <p>Reactivate the dormant terminal.</p>
+        </div>
+
+        <div class="archive-countdown">
+            <span>ARCHIVE STATUS</span>
+            <strong>OFFLINE</strong>
+            <p>Awaiting manual activation.</p>
+        </div>
+
+        <button id="archiveTerminal" class="scene-object archive-object">
+            <span class="object-glow"></span>
+            <span>⌘</span>
+            <strong>LUMA TERMINAL</strong>
+            <small>[ E ] ACCESS</small>
+        </button>
+
+        <div class="scene-bottom-hint">
+            Dust gathers around the forgotten screen.
+        </div>
+    </section>
+
+    <!-- SCENE 4: CHAPTER ENDING -->
+    <section id="endingScene" class="story-scene ending-scene">
+
+        <div class="ending-content">
+            <span class="memory-label">VEYRA // TRANSIT SYSTEM</span>
+
+            <p class="ending-eyebrow">LOCAL ARCHIVE REACTIVATED</p>
+
+            <h1>The way back.</h1>
+
+            <p class="ending-countdown">LOCAL ARCHIVE SHUTDOWN IN: 06 HOURS</p>
+
+            <p class="ending-dialogue">
+                The escalator begins to move.<br>
+                Somewhere below, something is waiting.
             </p>
 
-            <div class="memory-options">
+            <button id="finishChapter" class="align-button">
+                CONTINUE → 
+            </button>
+        </div>
+    </section>
+
+    <!-- REUSABLE MEMORY / CHOICE PANEL -->
+    <section id="memoryPanel" class="memory-panel">
+
+        <div class="memory-content">
+
+            <button id="closeMemory" class="memory-close" aria-label="Close">×</button>
+
+            <span id="memoryLabel" class="memory-label">LUMA MEMORY ARCHIVE</span>
+
+            <h2 id="memoryTitle">Conflicting Memories</h2>
+
+            <p id="memoryDescription" class="memory-description">
+                Two records. One forgotten moment. Which memory will you trust?
+            </p>
+
+            <div id="memoryOptions" class="memory-options">
+
                 <button class="memory-card" data-memory="official">
                     <span class="memory-type">01 — LUMA OFFICIAL LOG</span>
                     <h3>Departure Record</h3>
@@ -181,143 +238,43 @@
                     <h3>A Familiar Promise</h3>
                     <p>
                         I left a pass at the gate under the old
-                        cherry-blossom hologram, just in case
-                        you ever came back.
+                        cherry-blossom hologram, just in case you ever came back.
                     </p>
                     <span class="memory-select">SELECT MEMORY →</span>
                 </button>
+
             </div>
 
-            <p id="memoryFeedback" class="memory-feedback"></p>
+            <p id="memoryFeedback" class="memory-feedback">
+                Select a memory to continue.
+            </p>
 
             <button id="alignMemory" class="align-button" disabled>
                 ALIGN MEMORY →
             </button>
 
-            <button id="closeMemory" class="memory-close">×</button>
-
         </div>
-    </div>
+    </section>
 
-    </div>
-
-    <!-- GATE UNLOCK MESSAGE -->
-    <div id="gateMessage" class="gate-message">
-
+    <!-- STORY MESSAGE -->
+    <section id="storyMessage" class="gate-message">
         <div>
-            <span>MEMORY RESTORED</span>
-            <h2>The gate remembers.</h2>
-            <p>A path forward has opened.</p>
-            <button id="continueAfterGate">CONTINUE →</button>
+            <span id="messageLabel">MEMORY RESTORED</span>
+            <h2 id="messageTitle">The gate remembers.</h2>
+            <p id="messageText">A path forward has opened.</p>
+            <button id="continueStory">CONTINUE →</button>
         </div>
-
-    </div>
-
-    <!--player-->
-    <div id="player" class="player">
-        <div class="player-light"></div>
-        <div class="player-silhouette"></div>
-    </div>
-
-    <!--interacion hint-->
-    <div id="movementHunt" class="movement-hint">
-        <span>← →</span>
-        MOVE
-        <span>W-A-S-D</span>
-    </div>
+    </section>
 
     <!-- DIALOGUE -->
     <div id="dialogueBox" class="dialogue-box">
-        <p class="dialogue-speaker">UNKNOWN</p>
+        <p id="dialogueSpeaker" class="dialogue-speaker">UNKNOWN</p>
         <p id="dialogueText"></p>
         <button id="dialogueContinue">CONTINUE →</button>
     </div>
 
+    <!-- AUDIO ELEMENTS -->
+    <audio id="recorderAudio" src="audio/mother-recording.mp3" preload="auto"></audio>
 
-
-    <!--ticket gate memory puzzle-->
-            <section id="memoryPanel" class="memory-panel">
-
-            <div class="memory-content">
-
-                <span class="memory-label">LUMA SYSTEM // ACCESS RECORD</span>
-
-                <h2>THE TICKET GATE</h2>
-
-                <p class="memory-description">
-                    Two memories overlap.
-                    One belongs to the system.
-                    The other feels strangely familiar.
-                </p>
-
-                <div class="memory-options">
-
-                    <!-- OFFICIAL MEMORY -->
-                    <button class="memory-card" data-memory="official">
-
-                        <span class="memory-type">OFFICIAL LOG</span>
-
-                        <h3>LUMA TRANSIT RECORD</h3>
-
-                        <p>
-                            "Passenger departed Veyra six years ago.
-                            Return ticket never purchased."
-                        </p>
-
-                        <span class="memory-select">SELECT MEMORY</span>
-
-                    </button>
-
-
-                    <!-- MOTHER'S MEMORY -->
-                    <button class="memory-card" data-memory="mother">
-
-                        <span class="memory-type">UNFINISHED FRAGMENT</span>
-
-                        <h3>UNKNOWN SOURCE</h3>
-
-                        <p>
-                            "I left a pass at the gate under the
-                            old cherry-blossom hologram,
-                            just in case you ever came back."
-                        </p>
-
-                        <span class="memory-select">SELECT MEMORY</span>
-
-                    </button>
-
-                </div>
-
-                <p id="memoryFeedback" class="memory-feedback">
-                    Select the memory you want to follow.
-                </p>
-
-                <button id="alignMemory" class="align-button" disabled>
-                    ALIGN MEMORY
-                </button>
-
-                <button id="closeMemory" class="memory-close">
-                    CLOSE
-                </button>
-
-            </div>
-
-        </section>
-
-
-        <!-- GATE UNLOCK MESSAGE -->
-        <div id="gateMessage" class="gate-message">
-            <span>MEMORY ALIGNED</span>
-            <h2>ACCESS RESTORED</h2>
-            <p>The frozen barrier begins to dissolve.</p>
-            <button id="continueAfterGate">CONTINUE →</button>
-        </div>
-
-    </main>
 </body>
-
-</main>
-
-
-
 </html>

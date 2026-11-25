@@ -7,43 +7,59 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const cutscene = document.getElementById("openingCutscene");
     const video = document.getElementById("openingVideo");
+    const playButton = document.getElementById("playCutscene");
     const skipButton = document.getElementById("skipCutscene");
 
-    const platform = document.getElementById("platformScene");
-    const player = document.getElementById("player");
+    const music = document.getElementById("chapterMusic");
 
+    const platform = document.getElementById("platformScene");
+    const glassScene = document.getElementById("glassScene");
+    const archiveScene = document.getElementById("archiveScene");
+    const endingScene = document.getElementById("endingScene");
+
+    const player = document.getElementById("player");
     const ticketGate = document.getElementById("ticketGate");
+    const recorderButton = document.getElementById("recorderButton");
+    const archiveTerminal = document.getElementById("archiveTerminal");
 
     const memoryPanel = document.getElementById("memoryPanel");
-    const memoryCards = document.querySelectorAll(".memory-card");
-    const alignButton = document.getElementById("alignMemory");
+    const memoryLabel = document.getElementById("memoryLabel");
+    const memoryTitle = document.getElementById("memoryTitle");
+    const memoryDescription = document.getElementById("memoryDescription");
+    const memoryOptions = document.getElementById("memoryOptions");
     const memoryFeedback = document.getElementById("memoryFeedback");
+    const alignButton = document.getElementById("alignMemory");
     const closeMemory = document.getElementById("closeMemory");
 
-    const gateMessage = document.getElementById("gateMessage");
-    const continueAfterGate = document.getElementById("continueAfterGate");
+    const storyMessage = document.getElementById("storyMessage");
+    const messageLabel = document.getElementById("messageLabel");
+    const messageTitle = document.getElementById("messageTitle");
+    const messageText = document.getElementById("messageText");
+    const continueStory = document.getElementById("continueStory");
 
-    const music = document.getElementById("chapterMusic");
-    function startMusic() {
-        if (!music) return;
+    const dialogueBox = document.getElementById("dialogueBox");
+    const dialogueSpeaker = document.getElementById("dialogueSpeaker");
+    const dialogueText = document.getElementById("dialogueText");
+    const dialogueContinue = document.getElementById("dialogueContinue");
 
-        music.volume = 0.7;
+    const recorderAudio = document.getElementById("recorderAudio");
+    const objectiveText = document.getElementById("objectiveText");
+    const movementHint = document.getElementById("movementHint");
+    const finishChapter = document.getElementById("finishChapter");
 
-        music.play().catch(error => {
-            console.error("Music playback failed:", error);
-        });
-    }
 
     // =====================================
     // GAME STATE
     // =====================================
 
-    let playerPosition = 12;
+    let currentStage = 1;
     let selectedMemory = null;
 
     let sceneStarted = false;
-    let gateUnlocked = false;
     let panelOpen = false;
+    let gateUnlocked = false;
+
+    let playerPosition = 12;
 
     const moveSpeed = 0.8;
     const gatePosition = 75;
@@ -53,15 +69,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // =====================================
-    // START CUTSCENE
+    // MUSIC
     // =====================================
 
+    function startMusic() {
+        if (!music) return;
 
-// =====================================
-// START CUTSCENE
-// =====================================
+        music.volume = 0.7;
 
-    const playButton = document.getElementById("playCutscene");
+        music.play().catch(error => {
+            console.warn("Background music could not start:", error);
+        });
+    }
+
+
+    // =====================================
+    // OPENING CUTSCENE
+    // =====================================
 
     function startPlatform() {
 
@@ -77,7 +101,6 @@ document.addEventListener("DOMContentLoaded", () => {
         startMusic();
     }
 
-    // Player clicks to start video WITH sound
     playButton.addEventListener("click", () => {
 
         video.currentTime = 0;
@@ -92,11 +115,390 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
 
-    // Skip video
     skipButton.addEventListener("click", startPlatform);
-
-    // Automatically enter the game when video ends
     video.addEventListener("ended", startPlatform);
+
+
+    // =====================================
+    // SCENE MANAGEMENT
+    // =====================================
+
+    function changeScene(scene) {
+
+        platform.classList.remove("active");
+        glassScene.classList.remove("active");
+        archiveScene.classList.remove("active");
+        endingScene.classList.remove("active");
+
+        scene.classList.add("active");
+
+        panelOpen = false;
+        memoryPanel.classList.remove("show");
+
+        dialogueBox.classList.remove("show");
+        storyMessage.classList.remove("show");
+    }
+
+
+    // =====================================
+    // REUSABLE CHOICE PANEL
+    // =====================================
+
+    function openChoicePanel(stage) {
+
+        currentStage = stage;
+        selectedMemory = null;
+        panelOpen = true;
+
+        alignButton.disabled = true;
+
+        if (stage === 1) {
+
+            memoryLabel.textContent = "LUMA MEMORY ARCHIVE";
+            memoryTitle.textContent = "Conflicting Memories";
+
+            memoryDescription.textContent =
+                "Two records. One forgotten moment. Which memory will you trust?";
+
+            memoryOptions.innerHTML = `
+                <button class="memory-card" data-memory="official">
+                    <span class="memory-type">01 — LUMA OFFICIAL LOG</span>
+                    <h3>Departure Record</h3>
+                    <p>
+                        Passenger departed Veyra six years ago.
+                        Return ticket never purchased.
+                    </p>
+                    <span class="memory-select">SELECT RECORD →</span>
+                </button>
+
+                <button class="memory-card" data-memory="mother">
+                    <span class="memory-type">02 — MOTHER'S UNFINISHED FRAGMENT</span>
+                    <h3>A Familiar Promise</h3>
+                    <p>
+                        I left a pass at the gate under the old
+                        cherry-blossom hologram, just in case you ever came back.
+                    </p>
+                    <span class="memory-select">SELECT MEMORY →</span>
+                </button>
+            `;
+
+            memoryFeedback.textContent = "Select a memory to continue.";
+        }
+
+
+        if (stage === 2) {
+
+            memoryLabel.textContent = "RECOVERED AUDIO // UNKNOWN DATE";
+            memoryTitle.textContent = "A Voice From Somewhere";
+
+            memoryDescription.textContent =
+                "The recording is damaged. How much of it will you listen to?";
+
+            memoryOptions.innerHTML = `
+                <button class="memory-card" data-memory="listen">
+                    <span class="memory-type">01 — COMPLETE RECORDING</span>
+                    <h3>Keep Listening</h3>
+                    <p>
+                        Let the recording play until the end.
+                        There may be something worth hearing.
+                    </p>
+                    <span class="memory-select">LISTEN →</span>
+                </button>
+
+                <button class="memory-card" data-memory="stop">
+                    <span class="memory-type">02 — INTERRUPTED RECORDING</span>
+                    <h3>Stop Here</h3>
+                    <p>
+                        That voice is familiar.
+                        Perhaps hearing more isn't necessary.
+                    </p>
+                    <span class="memory-select">STOP RECORDING →</span>
+                </button>
+            `;
+
+            memoryFeedback.textContent = "The recorder clicks softly.";
+        }
+
+
+        if (stage === 3) {
+
+            memoryLabel.textContent = "LUMA LOCAL ARCHIVE";
+            memoryTitle.textContent = "Things Left Behind";
+
+            memoryDescription.textContent =
+                "Two archive categories remain accessible. Which one will you investigate?";
+
+            memoryOptions.innerHTML = `
+                <button class="memory-card" data-memory="personal">
+                    <span class="memory-type">01 — PERSONAL ARCHIVE</span>
+                    <h3>Childhood Records</h3>
+                    <p>
+                        Photographs, saved messages, and fragments
+                        from a life once lived here.
+                    </p>
+                    <span class="memory-select">OPEN ARCHIVE →</span>
+                </button>
+
+                <button class="memory-card" data-memory="transit">
+                    <span class="memory-type">02 — TRANSIT ARCHIVE</span>
+                    <h3>Official Records</h3>
+                    <p>
+                        Passenger history, departure logs,
+                        and records modified by LUMA.
+                    </p>
+                    <span class="memory-select">OPEN RECORDS →</span>
+                </button>
+            `;
+
+            memoryFeedback.textContent = "Choose an archive to investigate.";
+        }
+
+
+        memoryPanel.classList.add("show");
+
+        // Add selection events to the newly created cards
+        document.querySelectorAll(".memory-card").forEach(card => {
+
+            card.addEventListener("click", () => {
+
+                document.querySelectorAll(".memory-card").forEach(item => {
+                    item.classList.remove("selected");
+                });
+
+                card.classList.add("selected");
+
+                selectedMemory = card.dataset.memory;
+                alignButton.disabled = false;
+
+                memoryFeedback.textContent =
+                    "Selection recorded. Confirm when ready.";
+
+            });
+
+        });
+
+    }
+
+
+    // =====================================
+    // OPEN INTERACTIONS
+    // =====================================
+
+    function inspectGate() {
+
+        if (!sceneStarted || gateUnlocked || panelOpen) return;
+
+        const distance = Math.abs(playerPosition - gatePosition);
+
+        if (distance > interactionDistance) {
+
+            memoryFeedback.textContent = "You are too far from the gate.";
+
+            return;
+        }
+
+        openChoicePanel(1);
+    }
+
+    ticketGate.addEventListener("click", inspectGate);
+
+
+    recorderButton.addEventListener("click", () => {
+
+        if (panelOpen) return;
+
+        openChoicePanel(2);
+
+    });
+
+
+    archiveTerminal.addEventListener("click", () => {
+
+        if (panelOpen) return;
+
+        openChoicePanel(3);
+
+    });
+
+
+    // =====================================
+    // CONFIRM CHOICE
+    // =====================================
+
+    alignButton.addEventListener("click", () => {
+
+        if (!selectedMemory) return;
+
+
+        // SCENE 1: PLATFORM 04
+
+        if (currentStage === 1) {
+
+            if (selectedMemory === "official") {
+
+                memoryFeedback.textContent =
+                    "The record remains unchanged. Something is missing.";
+
+                return;
+            }
+
+            gateUnlocked = true;
+
+            ticketGate.classList.add("unlocked");
+
+            platform.style.filter = "brightness(1.2)";
+
+            memoryPanel.classList.remove("show");
+            panelOpen = false;
+
+            showStoryMessage(
+                "MEMORY RESTORED",
+                "The gate remembers.",
+                "A familiar promise opens the frozen barrier."
+            );
+
+            return;
+        }
+
+
+        // SCENE 2: GLASS OVERLOOK
+
+        if (currentStage === 2) {
+
+            if (selectedMemory === "listen") {
+
+                recorderAudio.play().catch(() => {});
+
+                showStoryMessage(
+                    "RECORDING RECOVERED",
+                    "She wasn't always like that.",
+                    "The coworker's voice returns through the static. They mention that your mother had been distant long before her departure."
+                );
+
+            } else {
+
+                recorderAudio.pause();
+                recorderAudio.currentTime = 0;
+
+                showStoryMessage(
+                    "RECORDING INTERRUPTED",
+                    "I know that voice.",
+                    "You remember the sound of your mother's voice. The rest of the conversation feels strangely out of reach."
+                );
+
+            }
+
+            memoryPanel.classList.remove("show");
+            panelOpen = false;
+
+            return;
+        }
+
+
+        // SCENE 3: LOCAL ARCHIVE
+
+        if (currentStage === 3) {
+
+            if (selectedMemory === "personal") {
+
+                showStoryMessage(
+                    "PERSONAL ARCHIVE OPENED",
+                    "A familiar photograph.",
+                    "A childhood photograph appears on the screen. You recognize the room, the curtains, and the light. The person standing beside you takes a little longer."
+                );
+
+            } else {
+
+                showStoryMessage(
+                    "TRANSIT RECORD ACCESSED",
+                    "Records modified.",
+                    "Several passenger records were altered after the departure date. One entry has no recorded destination."
+                );
+
+            }
+
+            memoryPanel.classList.remove("show");
+            panelOpen = false;
+
+        }
+
+    });
+
+
+    // =====================================
+    // STORY MESSAGE
+    // =====================================
+
+    function showStoryMessage(label, title, message) {
+
+        messageLabel.textContent = label;
+        messageTitle.textContent = title;
+        messageText.textContent = message;
+
+        storyMessage.classList.add("show");
+    }
+
+
+    // =====================================
+    // CONTINUE STORY
+    // =====================================
+
+    continueStory.addEventListener("click", () => {
+
+        storyMessage.classList.remove("show");
+
+
+        // AFTER PLATFORM 04
+
+        if (currentStage === 1) {
+
+            currentStage = 2;
+
+            objectiveText.textContent =
+                "Find the source of the recording.";
+
+            changeScene(glassScene);
+
+            return;
+        }
+
+
+        // AFTER GLASS OVERLOOK
+
+        if (currentStage === 2) {
+
+            currentStage = 3;
+
+            changeScene(archiveScene);
+
+            return;
+        }
+
+
+        // AFTER LOCAL ARCHIVE
+
+        if (currentStage === 3) {
+
+            currentStage = 4;
+
+            changeScene(endingScene);
+
+        }
+
+    });
+
+
+    // =====================================
+    // CLOSE CHOICE PANEL
+    // =====================================
+
+    closeMemory.addEventListener("click", () => {
+
+        panelOpen = false;
+        memoryPanel.classList.remove("show");
+
+    });
+
 
     // =====================================
     // PLAYER MOVEMENT
@@ -110,15 +512,30 @@ document.addEventListener("DOMContentLoaded", () => {
             event.preventDefault();
         }
 
-        if (!sceneStarted || panelOpen || gateUnlocked) return;
+        if (!sceneStarted || panelOpen || storyMessage.classList.contains("show")) {
+            return;
+        }
 
         keys[event.key.toLowerCase()] = true;
 
         if (event.key.toLowerCase() === "e") {
-            inspectGate();
+
+            if (platform.classList.contains("active")) {
+                inspectGate();
+            }
+
+            if (glassScene.classList.contains("active")) {
+                openChoicePanel(2);
+            }
+
+            if (archiveScene.classList.contains("active")) {
+                openChoicePanel(3);
+            }
+
         }
 
     });
+
 
     document.addEventListener("keyup", event => {
         keys[event.key.toLowerCase()] = false;
@@ -127,7 +544,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updateMovement() {
 
-        if (sceneStarted && !panelOpen && !gateUnlocked) {
+        if (
+            sceneStarted &&
+            platform.classList.contains("active") &&
+            !panelOpen &&
+            !gateUnlocked
+        ) {
 
             if (keys["arrowright"] || keys["d"]) {
                 playerPosition += moveSpeed;
@@ -137,10 +559,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 playerPosition -= moveSpeed;
             }
 
-            playerPosition = Math.max(
-                5,
-                Math.min(playerPosition, 90)
-            );
+            playerPosition = Math.max(5, Math.min(playerPosition, 90));
 
             player.style.left = `${playerPosition}%`;
         }
@@ -152,113 +571,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // =====================================
-    // TICKET GATE INTERACTION
+    // DIALOGUE CONTROLS
     // =====================================
 
-    function inspectGate() {
-
-        if (!sceneStarted || gateUnlocked) return;
-
-        const distance = Math.abs(playerPosition - gatePosition);
-
-        if (distance > interactionDistance) {
-            return;
-        }
-
-        panelOpen = true;
-        memoryPanel.classList.add("show");
-    }
-
-    ticketGate.addEventListener("click", inspectGate);
-
-
-    // =====================================
-    // MEMORY SELECTION
-    // =====================================
-
-    memoryCards.forEach(card => {
-
-        card.addEventListener("click", () => {
-
-            memoryCards.forEach(item => {
-                item.classList.remove("selected");
-            });
-
-            card.classList.add("selected");
-
-            selectedMemory = card.dataset.memory;
-
-            alignButton.disabled = false;
-
-            memoryFeedback.textContent =
-                selectedMemory === "mother"
-                    ? "A familiar voice. A place beneath the blossoms."
-                    : "The system's record seems incomplete.";
-
-        });
-
+    dialogueContinue.addEventListener("click", () => {
+        dialogueBox.classList.remove("show");
     });
 
 
     // =====================================
-    // ALIGN MEMORY
+    // CHAPTER END
     // =====================================
 
-    alignButton.addEventListener("click", () => {
+    finishChapter.addEventListener("click", () => {
 
-        if (!selectedMemory) return;
-
-        if (selectedMemory === "official") {
-
-            memoryFeedback.textContent =
-                "The record remains unchanged. Something is missing.";
-
-            return;
-        }
-
-        // Correct memory selected
-
-        panelOpen = false;
-        memoryPanel.classList.remove("show");
-
-        gateUnlocked = true;
-
-        ticketGate.classList.add("unlocked");
-
-        // Slightly brighten the platform
-        platform.style.filter = "brightness(1.2)";
-
-        // Show unlock message
-        setTimeout(() => {
-            gateMessage.classList.add("show");
-        }, 800);
-
-    });
-
-
-    // =====================================
-    // CLOSE MEMORY PANEL
-    // =====================================
-
-    closeMemory.addEventListener("click", () => {
-
-        panelOpen = false;
-        memoryPanel.classList.remove("show");
-
-    });
-
-
-    // =====================================
-    // CONTINUE AFTER GATE
-    // =====================================
-
-    continueAfterGate.addEventListener("click", () => {
-
-        gateMessage.classList.remove("show");
-
-        // This is where Interaction 2 will begin later.
-        document.querySelector(".objective p").textContent =
-            "The way forward is open.";
+        window.location.href = "chapter2.html";
 
     });
 

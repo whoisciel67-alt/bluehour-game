@@ -731,3 +731,317 @@ button {
     }
 }
 
+
+/* =========================================
+   STORY SCENES
+========================================= */
+
+.story-scene {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: opacity 1.2s ease, visibility 1.2s ease;
+
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.story-scene.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* =========================================
+   SCENE BACKGROUNDS
+========================================= */
+
+.glass-scene {
+    background-image:
+        linear-gradient(
+            to bottom,
+            rgba(17, 12, 43, 0.2),
+            rgba(17, 12, 43, 0.75)
+        ),
+        url("images/glass-overlook.jpg");
+}
+
+.archive-scene {
+    background-image:
+        linear-gradient(
+            to bottom,
+            rgba(17, 12, 43, 0.3),
+            rgba(17, 12, 43, 0.8)
+        ),
+        url("images/local-archive.jpg");
+}
+
+.ending-scene {
+    background-image:
+        linear-gradient(
+            rgba(19, 12, 43, 0.5),
+            rgba(19, 12, 43, 0.9)
+        ),
+        url("images/archive-escalator.gif");
+}
+
+.scene-shade {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(13, 10, 35, 0.45),
+            transparent 70%
+        );
+}
+
+
+/* =========================================
+   SCENE DESCRIPTIONS
+========================================= */
+
+.overlook-description {
+    position: absolute;
+    left: 45px;
+    bottom: 18%;
+    z-index: 2;
+}
+
+.overlook-description span,
+.archive-countdown span {
+    color: var(--pink);
+    font-size: 10px;
+    letter-spacing: 3px;
+}
+
+.overlook-description p {
+    color: var(--white-pink);
+    font-family: "Kings", serif;
+    font-size: clamp(25px, 4vw, 42px);
+}
+
+
+/* =========================================
+   INTERACTIVE SCENE OBJECTS
+========================================= */
+
+.scene-object {
+    position: absolute;
+    z-index: 4;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    width: 190px;
+    height: 190px;
+
+    color: var(--white-pink);
+    background: rgba(30, 19, 64, 0.7);
+    border: 1px solid rgba(255, 181, 235, 0.55);
+
+    transition: 0.4s ease;
+}
+
+.scene-object:hover {
+    transform: translateY(-8px);
+    border-color: var(--pink);
+    box-shadow: 0 0 40px rgba(255, 181, 235, 0.2);
+}
+
+.scene-object > span:not(.object-glow) {
+    font-size: 38px;
+    color: var(--pink);
+}
+
+.scene-object strong {
+    font-size: 11px;
+    letter-spacing: 3px;
+}
+
+.scene-object small {
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--lavender);
+}
+
+.object-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            135deg,
+            transparent,
+            rgba(255, 181, 235, 0.12),
+            transparent
+        );
+}
+
+.recorder-object {
+    left: 68%;
+    bottom: 22%;
+}
+
+.archive-object {
+    left: 65%;
+    bottom: 20%;
+}
+
+
+/* =========================================
+   ARCHIVE COUNTDOWN
+========================================= */
+
+.archive-countdown {
+    position: absolute;
+    left: 45px;
+    bottom: 18%;
+    z-index: 2;
+
+    padding: 22px 28px;
+
+    background: rgba(25, 15, 55, 0.65);
+    border-left: 2px solid var(--pink);
+}
+
+.archive-countdown strong {
+    display: block;
+    margin-top: 12px;
+
+    color: var(--white-pink);
+    font-family: "Kings", serif;
+    font-size: 34px;
+    font-weight: normal;
+}
+
+.archive-countdown p {
+    color: rgba(255, 240, 255, 0.65);
+    font-size: 12px;
+}
+
+
+/* =========================================
+   SCENE HINT
+========================================= */
+
+.scene-bottom-hint {
+    position: absolute;
+    left: 50%;
+    bottom: 35px;
+    transform: translateX(-50%);
+
+    color: rgba(255, 240, 255, 0.7);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+
+/* =========================================
+   CHAPTER ENDING
+========================================= */
+
+.ending-scene {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.ending-content {
+    width: min(700px, 90%);
+    padding: 50px 25px;
+}
+
+.ending-eyebrow {
+    margin-top: 35px;
+
+    color: var(--pink);
+    font-size: 10px;
+    letter-spacing: 4px;
+}
+
+.ending-content h1 {
+    margin: 15px 0;
+
+    font-family: "Kings", serif;
+    font-size: clamp(55px, 9vw, 100px);
+    font-weight: normal;
+}
+
+.ending-countdown {
+    margin-top: 30px;
+
+    color: var(--pink);
+    font-size: 11px;
+    letter-spacing: 3px;
+}
+
+.ending-dialogue {
+    margin: 30px auto;
+    color: rgba(255, 240, 255, 0.75);
+    line-height: 2;
+}
+
+
+/* =========================================
+   CHOICE PANEL LAYERING
+========================================= */
+
+.memory-panel {
+    z-index: 100;
+}
+
+.gate-message {
+    z-index: 110;
+}
+
+.dialogue-box {
+    z-index: 120;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 650px) {
+
+    .overlook-description,
+    .archive-countdown {
+        left: 20px;
+        bottom: 25%;
+    }
+
+    .recorder-object,
+    .archive-object {
+        left: auto;
+        right: 8%;
+        bottom: 10%;
+        width: 140px;
+        height: 140px;
+    }
+
+    .scene-bottom-hint {
+        width: 90%;
+        bottom: 20px;
+    }
+
+    .ending-content {
+        padding: 25px 15px;
+    }
+
+}
