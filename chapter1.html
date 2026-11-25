@@ -152,33 +152,50 @@
 
     <!-- MEMORY PANEL -->
     <div id="memoryPanel" class="memory-panel">
-
         <div class="memory-content">
 
-            <button id="closeMemory" class="memory-close">×</button>
+            <span class="memory-label">LUMA MEMORY ARCHIVE</span>
 
-            <span class="memory-subtitle">LUMA MEMORY ARCHIVE</span>
-            <h2>CONFLICTING RECORDS</h2>
+            <h2>Conflicting Memories</h2>
 
-            <p>Select a memory to examine.</p>
+            <p class="memory-description">
+                Two records. One forgotten moment.
+                Which memory will you trust?
+            </p>
 
-            <button class="memory-card" data-memory="official">
-                <span>01 — LUMA OFFICIAL LOG</span>
-                <p>Passenger departed Veyra six years ago. Return ticket never purchased.</p>
-            </button>
+            <div class="memory-options">
+                <button class="memory-card" data-memory="official">
+                    <span class="memory-type">01 — LUMA OFFICIAL LOG</span>
+                    <h3>Departure Record</h3>
+                    <p>
+                        Passenger departed Veyra six years ago.
+                        Return ticket never purchased.
+                    </p>
+                    <span class="memory-select">SELECT RECORD →</span>
+                </button>
 
-            <button class="memory-card" data-memory="mother">
-                <span>02 — MOTHER'S UNFINISHED FRAGMENT</span>
-                <p>I left a pass at the gate under the old cherry-blossom hologram, just in case you ever came back.</p>
-            </button>
+                <button class="memory-card" data-memory="mother">
+                    <span class="memory-type">02 — MOTHER'S UNFINISHED FRAGMENT</span>
+                    <h3>A Familiar Promise</h3>
+                    <p>
+                        I left a pass at the gate under the old
+                        cherry-blossom hologram, just in case
+                        you ever came back.
+                    </p>
+                    <span class="memory-select">SELECT MEMORY →</span>
+                </button>
+            </div>
 
-            <p id="memoryFeedback">Choose a memory to continue.</p>
+            <p id="memoryFeedback" class="memory-feedback"></p>
 
-            <button id="alignMemory" disabled>
+            <button id="alignMemory" class="align-button" disabled>
                 ALIGN MEMORY →
             </button>
 
+            <button id="closeMemory" class="memory-close">×</button>
+
         </div>
+    </div>
 
     </div>
 

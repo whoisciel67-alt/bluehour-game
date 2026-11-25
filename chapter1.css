@@ -378,19 +378,19 @@ button {
 .memory-panel {
     position: fixed;
     inset: 0;
-    z-index: 20;
+    z-index: 100;
 
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 30px;
 
-    padding: 25px;
-    background: rgba(8, 9, 27, 0.88);
-    backdrop-filter: blur(12px);
+    background: rgba(10, 7, 30, 0.78);
+    backdrop-filter: blur(18px);
 
     opacity: 0;
     visibility: hidden;
-    transition: 0.5s ease;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
 }
 
 .memory-panel.show {
@@ -399,100 +399,179 @@ button {
 }
 
 .memory-content {
-    width: min(850px, 100%);
+    position: relative;
+    width: min(900px, 100%);
+    padding: 55px 60px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(73, 38, 111, 0.45),
+            rgba(25, 13, 55, 0.96)
+        );
+
+    border: 1px solid rgba(255, 181, 235, 0.35);
+    box-shadow:
+        0 0 60px rgba(168, 121, 206, 0.12),
+        inset 0 0 35px rgba(255, 181, 235, 0.035);
+
+    color: var(--white-pink);
     text-align: center;
+
+    transform: translateY(25px) scale(0.98);
+    transition: transform 0.6s ease;
 }
 
+.memory-panel.show .memory-content {
+    transform: translateY(0) scale(1);
+}
+
+/* ARCHIVE HEADER */
+
 .memory-label {
+    display: inline-block;
     color: var(--pink);
-    letter-spacing: 4px;
     font-size: 10px;
+    letter-spacing: 5px;
+    margin-bottom: 15px;
 }
 
 .memory-content h2 {
     font-family: "Kings", serif;
-    font-size: clamp(35px, 5vw, 55px);
+    font-size: clamp(38px, 5vw, 58px);
     font-weight: normal;
-    margin: 12px 0;
+    letter-spacing: 1px;
+    margin: 0 0 12px;
 }
 
 .memory-description {
-    color: rgba(255, 240, 255, 0.7);
-    line-height: 1.7;
+    max-width: 520px;
+    margin: 0 auto;
+    color: rgba(255, 240, 255, 0.65);
+    font-size: 14px;
+    line-height: 1.8;
 }
+
+/* MEMORY CARDS */
 
 .memory-options {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-    margin: 35px 0 20px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+    margin: 40px 0 25px;
 }
 
 .memory-card {
-    min-height: 210px;
-    padding: 25px;
+    position: relative;
+    min-height: 230px;
+    padding: 28px;
+
     text-align: left;
-
     color: var(--white-pink);
-    background: rgba(73, 38, 111, 0.2);
-    border: 1px solid rgba(168, 121, 206, 0.4);
 
-    transition: 0.35s ease;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(168, 121, 206, 0.35);
+
+    transition:
+        transform 0.4s ease,
+        background 0.4s ease,
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
 }
 
-.memory-card:hover,
+.memory-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 0;
+    background: var(--pink);
+    transition: height 0.4s ease;
+}
+
+.memory-card:hover {
+    transform: translateY(-6px);
+    background: rgba(168, 121, 206, 0.12);
+    border-color: rgba(255, 181, 235, 0.65);
+    box-shadow: 0 12px 35px rgba(8, 5, 25, 0.25);
+}
+
+.memory-card:hover::before,
+.memory-card.selected::before {
+    height: 100%;
+}
+
 .memory-card.selected {
-    border-color: var(--pink);
-    background: rgba(168, 121, 206, 0.18);
-    box-shadow: 0 0 25px rgba(255, 181, 235, 0.1);
     transform: translateY(-4px);
+    background: rgba(168, 121, 206, 0.18);
+    border-color: var(--pink);
+    box-shadow: 0 0 25px rgba(255, 181, 235, 0.12);
 }
+
+/* CARD TEXT */
 
 .memory-type {
+    display: block;
     color: var(--pink);
     font-size: 10px;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
 }
 
 .memory-card h3 {
-    font-size: 15px;
-    letter-spacing: 2px;
+    font-family: "Kings", serif;
+    font-size: 23px;
+    font-weight: normal;
+    letter-spacing: 1px;
+    margin: 0 0 14px;
 }
 
 .memory-card p {
-    line-height: 1.8;
-    font-size: 14px;
+    color: rgba(255, 240, 255, 0.75);
+    font-size: 13px;
+    line-height: 1.9;
 }
 
 .memory-select {
-    font-size: 10px;
-    letter-spacing: 2px;
+    display: block;
+    margin-top: 22px;
     color: var(--lavender);
+    font-size: 9px;
+    letter-spacing: 2px;
 }
 
+/* FEEDBACK */
+
 .memory-feedback {
-    min-height: 20px;
+    min-height: 25px;
+    margin: 20px 0;
     color: var(--pink);
     font-size: 12px;
     letter-spacing: 1px;
 }
 
+/* ALIGN BUTTON */
+
 .align-button {
     display: block;
-    margin: 15px auto;
-    padding: 13px 35px;
+    margin: 25px auto 0;
+    padding: 15px 35px;
 
     color: var(--dark-purple);
     background: var(--pink);
     border: 1px solid var(--pink);
+
+    font-size: 11px;
     letter-spacing: 3px;
 
-    transition: 0.3s ease;
+    transition: all 0.35s ease;
 }
 
 .align-button:hover:not(:disabled) {
     background: var(--white-pink);
-    box-shadow: 0 0 25px rgba(255, 181, 235, 0.3);
+    box-shadow: 0 0 30px rgba(255, 181, 235, 0.3);
+    transform: translateY(-3px);
 }
 
 .align-button:disabled {
@@ -500,13 +579,54 @@ button {
     cursor: not-allowed;
 }
 
+/* CLOSE BUTTON */
+
 .memory-close {
-    color: rgba(255, 240, 255, 0.6);
+    position: absolute;
+    top: 22px;
+    right: 25px;
+
+    color: rgba(255, 240, 255, 0.65);
     background: none;
     border: none;
-    letter-spacing: 2px;
-    font-size: 10px;
+
+    font-size: 24px;
+    transition: color 0.3s ease;
 }
+
+.memory-close:hover {
+    color: var(--pink);
+}
+
+/* MOBILE */
+
+@media (max-width: 650px) {
+    .memory-panel {
+        overflow-y: auto;
+        align-items: flex-start;
+        padding: 20px;
+    }
+
+    .memory-content {
+        padding: 55px 22px 30px;
+    }
+
+    .memory-options {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin: 25px 0;
+    }
+
+    .memory-card {
+        min-height: 180px;
+        padding: 22px;
+    }
+
+    .memory-content h2 {
+        font-size: 38px;
+    }
+}
+
 
 /*gate unlock*/
 
